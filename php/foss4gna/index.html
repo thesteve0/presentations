@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Your geospatial platform on a PaaS - FOSS4G-NA 2013</title>
+
+		<meta name="description" content="Your geospatial platform on a PaaS - FOSS4G-NA 2013">
+		<meta name="author" content="Steven Citron-Pousty">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../shared/css/reveal.min.css">
+		<link rel="stylesheet" href="../shared/css/theme/night.css" id="theme">
+		<!-- CSS from SCP -->
+		<link rel="stylesheet" href="../shared/css/scp.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../shared/lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../shared/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section>
+					<h2>Your geospatial platform on a PaaS</h2>
+					<br>					
+					<h2>talks.thesteve0.com/foss4gna</h2>
+					<p>Presented by:</p>
+					<h4>Steven Citron-Pousty</h4>
+					<h4>PaaS Dust Spreader - Red Hat's OpenShift</h4>
+					<h4>@TheSteve0 on Twitter, IRC, and Github</h4>
+				</section>
+
+
+				<section>
+					<h2>Agenda</h2>
+					<ol>
+                        <li class="fragment"><strong>Learn a bit about PaaS</strong></li>
+                        <li class="fragment"><strong>A little about OpenShift</Strong></li>
+                        <li class="fragment"><strong>Watch it in action</strong></li>
+                    </ol>
+				</section>
+				
+				<section>
+				    <h2>Assumptions</h2>
+				    <ol>
+                        <li class="fragment"><strong>You like writing code rather than managing servers</strong></li>
+                        <li class="fragment"><strong>Or you like servers management and hate annoying developers</strong></li>
+                    </ol>
+				</section>
+				
+				<section>
+				    <h2>But I know EC2...</h2>
+				    <img width="700" height="550" src="img/Iaas-vs-paas.png">
+				</section>
+				
+				<section>
+				    <h2>One Source to Bind Them All</h2>
+				    <img src="../shared/img/Three_products.png"/>
+				    <br>&nbsp;
+				</section>
+				
+				<section>				    
+				    <img width="1052" height="664" src="img/our-stack.png">
+				    <p>&nbsp;</p>
+				</section>
+				
+				<section>				    
+				    <img width="1052" height="664" src="img/awesome-sauce.png">
+				    <p>&nbsp;</p>
+				</section>
+				
+				<section>
+				    <h2>But wait - there's more</h2>
+				    <ol>
+                        <li class="fragment"><strong>Free! No time limit</strong></li>
+                        <li class="fragment"><strong>3 gears (like servers) - each 512 Mb RAM, 1 Gb disk</strong></li>
+                        <li class="fragment"><strong>Auto-scaling</strong></li>
+                        <li class="fragment"><strong>Simple pricing</strong></li>
+                        <li class="fragment"><strong>We are coming out of developer preview this summer</strong></li>
+                    </ol>
+				</section>
+				
+				<section>
+					<h1>DEMO TIME!!!</h1>
+					<!-- Python then add MySQL -->
+				</section>
+				
+				<section>
+				    <h2>What stack am I going to show</h2>
+				    <ul>
+				        <li class="fragment">Linux</li>
+				        <li class="fragment">Postgresql + PostGIS</li>
+				        <li class="fragment">(No time but could also be MongoDB)</li>
+				        <li class="fragment">GeoServer</li>
+				    </ul>				    
+				</section>
+
+				<section>
+					<h2>What else I could have show</h2>
+					 <ul>
+				        <li class="fragment">proj4</li>
+				        <li class="fragment">org GDAL</li>
+				        <li class="fragment">lucene spatial</li>
+				        <li class="fragment">MapServer</li>
+				        <li class="fragment">MapBox/Tilemill</li>
+					</ul>
+				</section>				
+				
+								
+                <section>
+				    <h2>Linux</h2>
+				    NEED A PICTURE OF TUX
+				    <img  src="img/mongoshield.png">
+				    <p>But you get this for Free - just part of the package</p>
+				    <p>We make it easy to ssh into your gear - rhc ssh</p>
+				    
+				</section>
+				
+				<section>
+					<h2>What do you need to know</h2>
+					<ul>
+					<li class="fragment">ls (-l t a) - shows files on the system</li>
+					<li class="fragment">top (ctrl q to quit) - shows you the top running processes</li>
+					<li class="fragment">less [filename] - lets you scroll through the contents of the file</li>
+					<li class="fragment">grep (insert regex here) [filename] - helps you search for text anywhere in a file</li>
+					<li class="fragment">nano [filename] - very simple editor for text files</li>
+					</ul>
+				</section>
+				
+				<section>
+				    <h2>Postgresql + PostGIS</h2>
+				    <ul>
+				    <li class="fragment">We give you this out of the box as well</li>
+				    <li class="fragment">Just install the Postgresql cartridge and then run the Postgis scripts</li>
+				    <li class="fragment">And then you are good to go with all the functionality you are used to</li>
+				    <li class="fragment">You can use SSH port-forward to connect your PGAdmin</li>
+				    <li class="fragment">rhc port-forward (on mac it is a little trickier given BSD roots)</li>   
+				    </ul>
+				</section>
+				
+				<section>
+				    <h2>Geoserver</h2>
+				    <ul>
+				        <li class="fragment">Run in Java and we give you that/li>
+				        <li class="fragment">Two ways to install</li>
+				        <li class="fragment">As a WAR (but you need to do somme configuration)</li>
+				        <li class="fragment">As a DIY but also needs some configuration</li>
+				        <li class="fragment">I prefer the WAR because then you can choose any Java container you want</li>
+				    </ul>
+				</section>
+				
+				<section>
+					<h2>Installing the WAR</h2>
+					<h3>Assuming Tomcat</h3>
+					<ol>
+						<li class="fragment">Download the war file</li>
+						<li class="fragment">Export the CATALINA_OPS in an action_hook to point  to ~/app-root/data (also known as $OPENSHIFT_DATA_DIR)</li>
+						<li class="fragment">Place the WAR file in the webapps folder</li>
+						<li class="fragment">Extract the data dir from the WAR file to a temp location</li>
+						<li class="fragment">SFTP or SCP it up to ~/app-root/data</li>
+						<li class="fragment">Git add .; git commit -am "commit local"; git push </li>
+					</ol>					
+				</section>
+				
+				<section>
+				    <h2>GeoWebCache</h2>
+				    <ul>
+				     	<li class="fragment">You want it to write the cache to data directory from before</li>
+				     	<li class="fragment">Be careful about using up all your disk space</li>				     
+                    </ul>
+				</section>
+				
+				<section>
+				    <h2>Final hints</h2>
+				    <ul>
+				    	<li class="fragment">You want to make a scalable app - each piece on it's own gear</li>
+				    	<li class="fragment">You want scalable - easier to make applications talk to each other</li>
+				    	<li class="fragment">You are probably going to want access to medium gears</li>
+				    	<li class="fragment">Don't forget to backup your DB and your Apps - rhc snapshot</li>
+				    </ul>
+				    
+				</section>
+				
+				<section>
+				    <h2>Let's look at some code</h2>
+				</section>
+
+				<section>
+				    <h2>Let's wrap it up</h2>
+				    <ol>
+				         <li class="fragment">Openshift makes life great for you</li>
+				         <li class="fragment">You can run all your favorite spatial pieces</li>
+				         <li class="fragment">Free!</li>
+				    </ol>
+                   <p class="fragment">Come hang out with us:<br>
+                   #openshift on freenode irc <br>
+                   OR <br>
+                   users@lists.openshift.redhat.com</p>
+				    
+				</section>
+
+			</div>
+			<img style="position:fixed;width:15%;z-index:30;bottom:20px;left:20px;" src="../shared/img/RH_logo-trans_reverse.png"/>
+		</div>	
+
+		<script src="../shared/lib/js/head.min.js"></script>
+		<script src="../shared/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../shared/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../shared/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../shared/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../shared/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../shared/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../shared/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: '../shared/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: '../shared/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

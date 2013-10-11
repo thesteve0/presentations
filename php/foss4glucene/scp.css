@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+/*!
+ * steve's css for reveal.js
+ * 
+ * MIT licensed
+ *
+ * Copyright (C) 2013 Steven Citron-Pousty
+ */
+
+ .reveal .slides section .highlight-red {
+     color: #ff2c2d;
+ }
+ .reveal .slides section .highlight-blue {
+     color: #1b91ff;
+ }
+ .reveal .slides section .highlight-green {
+     color: #17ff2e;
+ }
+ .reveal .slides section .highlight-yellow {
+     color: #ffff00;
+ }
+  .reveal .slides section .highlight-orange {
+     color: #ffb53c;
+ }
+ 
+  .reveal .slides section table {
+  /*   width: 80%; */
+  	 align: left;
+     margin: 3px;
+     padding: 2px;
+     /* border: 6px; */
+     border-color: white;
+     border-style: solid;
+ }
+
+ .reveal .slides section table tbody tr th, 
+ .reveal .slides section table tbody tr td {
+ 	 align: left;
+     padding: 2px;
+     border: 1px;
+     border-color: white;
+     border-style: solid;
+ }
+ 
+/* .reveal .slides { font-size: 1.35em;	}*/
+ 	 

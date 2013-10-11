@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>OpenShift Introduction for Developers - DevExchange 2013</title>
+
+		<meta name="description" content="OpenShift Introduction for Developers - DevExchange 2013">
+		<meta name="author" content="Steven Citron-Pousty">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../shared/css/reveal.min.css">
+		<link rel="stylesheet" href="../shared/css/theme/night.css" id="theme">
+		<!-- CSS from SCP -->
+		<link rel="stylesheet" href="../shared/css/scp.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../shared/lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../shared/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section>
+					<h2>OpenShift Introduction for Developers</h2>
+					<br>
+					<h4><a href="http://talks.thesteve0.com/devexchange/index.html">http://talks.thesteve0.com/devexchange/</a></h4>					
+					<p>Presented by:</p>
+					<h3>Steven Citron-Pousty</h3>
+					<h3>@TheSteve0 on Twitter, IRC, and Github</h3>
+				</section>
+
+
+				<section>
+					<h2>Agenda</h2>
+					<ol>
+                        <li class="fragment"><strong>Learn a bit about PaaS & OpenShift</strong></li>
+                        <li class="fragment"><strong>See it in action</Strong></li>                        
+                    </ol>
+				</section>
+				
+				<section>
+				    <h2>Assumptions</h2>
+				    <ol>
+                        <li class="fragment"><strong>You write web code or are a devops person</strong></li>
+                        <li class="fragment"><strong>You can use command line, git, and ssh</strong></li>
+                        <li class="fragment"><strong>You will ask questions</strong></li>
+                    </ol>
+				</section>
+										
+				<section>
+				    <h2>But I know EC2...</h2>
+				    <img width="700" height="550" src="img/Iaas-vs-paas.png">
+				</section>
+				
+				<section>
+				    <h2>One Source to Bind Them All</h2>
+				    <img src="../shared/img/Three_products.png"/>
+				    <br>&nbsp;
+				</section>								
+				
+				<section>
+				    <h2>Time for coding - terminology</h2>
+				    <ol>
+                        <li class="fragment"><strong>Application – your web code and any data store. Has to be on 1 or more gears</strong></li>
+                        <li class="fragment"><strong>Gear – is like a server. It can have only 1 language for the web programming   </strong></li>
+                        <li class="fragment"><strong>Cartridge – it adds a language, a data store, or other functionality</strong></li>                       
+                    </ol>
+				</section>
+				
+				<section>				    
+				    <img width="1052" height="664" src="img/our-stack.png">
+				    <p>&nbsp;</p>
+				</section>
+											
+				<section>
+				    <h2>But wait - there's more</h2>
+				    <ol>
+                        <li class="fragment"><strong>Free! No time limit</strong></li>
+                        <li class="fragment"><strong>3 gears (like servers) - each 512 Mb RAM, 1 Gb disk</strong></li>
+                        <li class="fragment"><strong>Auto-scaling</strong></li>
+                        <li class="fragment"><strong>Simple pricing</strong></li>
+                    </ol>
+				</section>
+				
+				<section>				    
+				    <img width="1052" height="664" src="img/awesome-sauce.png">
+				    <p>&nbsp;</p>
+				</section>
+				
+				<section>
+				    <h2>Less talk more DEMO!!!</h2>
+				    <p>Instant Application, developer application, code changes, and add a database</p>
+				</section>
+				
+				<section>
+				    <h2>OpenShift Architecture</h2>
+				    <img src="img/arch.jpg">				
+				</section>
+				
+				<section>
+				    <h3>OpenShift Detailed Architecture</h3>
+				    <img src="img/fullarch.png">				
+				</section>
+				
+				<section>
+				    <h2>OpenShift Scaling</h2>
+				    <img src="img/scaling.jpg">				
+				</section>				
+
+				<section>
+				    <h2>Let's wrap it up</h2>
+				    <ol>
+				         <li class="fragment">Openshift makes life great for you (and your Ops People)</li>
+				         <li class="fragment">Great for everything from protoyping to production</li>
+				         <li class="fragment">Free!</li>
+				    </ol>
+                   <p class="fragment">Come hang out with us:<br>
+                   <h4>Application Developer</h4>
+                   #openshift on freenode irc <br>
+                   OR <br>
+                   users@lists.openshift.redhat.com<br>
+                   &nbsp; <br>
+                   <h4>If you want to hack on OpenShift</h4> 
+                    #openshift-dev on freenode irc <br>
+                   OR <br>
+                   dev@lists.openshift.redhat.com</p>
+				    
+				</section>
+
+			</div>
+			<img style="position:fixed;width:15%;z-index:30;bottom:20px;left:20px;" src="../shared/img/RH_logo-trans_reverse.png"/>
+		</div>	
+
+		<script src="../shared/lib/js/head.min.js"></script>
+		<script src="../shared/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../shared/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../shared/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../shared/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../shared/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../shared/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../shared/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: '../shared/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: '../shared/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
