@@ -23,12 +23,12 @@
   .reveal .slides section .highlight-orange {
      color: #ffb53c;
  }
- 
+ /*
   .reveal .slides section table {
      width: 80%;
      margin: 3px;
      padding: 2px;
-     /* border: 6px; */
+   
      border-color: white;
      border-style: solid;
  }
@@ -42,4 +42,4 @@
  }
  
  .reveal .slides { font-size: 1.55em;	}
- 	 
+*/ 	 
