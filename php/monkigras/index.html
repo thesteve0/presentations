@@ -31,6 +31,30 @@
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
 		<![endif]-->
+		<!-- Stolen from Katie -->
+		 <style>
+			.initial-front { z-index: 2; position: absolute; left: 420px; }
+                        .reveal .slides section .fragment.highlight-bg-green-temp,
+                        .reveal .slides section .fragment.highlight-bg-red,
+                        .reveal .slides section .fragment.highlight-bg-green,
+                        .reveal .slides section .fragment.highlight-bg-blue,
+                        .reveal .slides section .fragment.highlight-bg-purple {
+                            opacity: 1;
+                        }
+                        .reveal .slides section .fragment.highlight-bg-red.visible {
+                            background-color: #CC0000 !important;
+                        }
+                        .reveal .slides section .fragment.highlight-bg-green.visible,
+                        .fragment.highlight-bg-green-temp.current-fragment {
+                            background-color: #086206 !important;
+                        }
+                        .reveal .slides section .fragment.highlight-bg-blue.visible {
+                            background-color: #3333FF !important;
+                        }
+                        .reveal .slides section .fragment.highlight-bg-purple.visible {
+                            background-color: #8A2BE2 !important;
+                        }                    
+                </style>
 	</head>
 
 	<body>
@@ -84,8 +108,8 @@
 				
 				
 				<section>
-					<img class="fragment fade-out" src="img/birds1.png" />
-					<img class="fragment fade-in" src="img/birds2.png" />	
+					<img class="fragment fade-out initial-front" data-fragment-index="1" src="img/birds1.png" />
+					<img class="fragment" data-fragment-index="1" src="img/birds2.png" />	
 				    <!-- <h4>There is no value judgement</h4>
 Image with a vulture on one side, beautiful bird on the other. First overlay has the names of the birds. Second image says vulture is marketing and beauty is dev evangelist-->
 				</section>
