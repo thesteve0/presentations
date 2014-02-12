@@ -72,8 +72,7 @@
 				<section>
 				    <h2>On to Mongo</h2>
 				    <img  src="img/mongoshield.png">
-				    <p>&nbsp;</p>
-				    
+				    <p>&nbsp;</p>				    
 				</section>
 							
 				<section>
@@ -122,8 +121,7 @@
 				    <ul>
 				    <li class="fragment">Handles <a href="http://geojson.org/">GeoJSON natively</a> - benefit of working in meters and always on a sphere</a></li>
 				     <li class="fragment">Assumes coords. are between [-180 and 180)</li>
-				     <li class="fragment"><a href="http://docs.mongodb.org/manual/tutorial/calculate-distances-using-spherical-geometry-with-2d-geospatial-indexes/">Formula to convert</a>
-				     to human readable units</li>
+				     <li class="fragment"><a href="http://docs.mongodb.org/manual/tutorial/calculate-distances-using-spherical-geometry-with-2d-geospatial-indexes/">Formula to 						convert</a> to human readable units</li>
                     </ul>
 				</section>
 				
@@ -133,16 +131,17 @@
 				    <h3>1a. Put coordinates into an array</h3>
 				    <pre><code>
 { loc : [ 50 , 30 ] }    
-                    If you use lattitude and longitude with a default index 
-                    make sure to put [lon, lat]
+    If you use lattitude and longitude with a default index 
+           make sure to put [lon, lat]
 				    </code></pre>
 				    </div>
 				    <div class="fragment">
 				    <h3>1b. Put coordinates in a GeoJSON Document </h3> 
 				    <pre><code>
-		{ loc : { type : "Point" ,
-          coordinates : [ 40, 5 ]
-          } }
+{ loc : { type : "Point" ,
+      coordinates : [ 40, 5 ]
+		} 
+}
 				    </code></pre>
 				    </div>
 				</section>
@@ -164,6 +163,33 @@
 				    
 				    
 				</section>
+				<section>
+				    <h2>On to Node.JS</h2>
+				    <img  src="img/nodejs.png">
+				    <p>&nbsp;</p>				    
+				</section>
+
+				<section>
+				    <h2>Why all the fuss</h2>
+				    <ol>
+                        <li class="fragment"><strong>It's all in JavaScript</strong></li>
+                        <li class="fragment"><strong>You get great async behavior out of the box</strong></li>
+                        <li class="fragment"><strong>Fast and Lightweight for certain use cases</strong></li>       
+                    </ol>
+				</section>	
+				<section>
+				    <h2>Steve's Unofficial "When you should use it"</h2>
+				    <ol>
+                        <li class="fragment"><strong>You are a team of JS programmers</strong></li>
+                        <li class="fragment"><strong>You want to serve up a lot of things really fast</strong></li>
+                        <li class="fragment"><strong>You don't need all the libraries that some other langs bring</strong></li>
+                    </ol>
+				</section>	
+				<section>
+					<h2>Don't drink the Kool-Aid</h2>
+					<iframe width="560" height="315" src="//www.youtube.com/embed/bzkRVzciAZg?rel=0" frameborder="0" allowfullscreen></iframe>
+				</section>
+				
 				<section>
 				Need an intro to node  then leaflet and OSM    then the github repo then look at the app
 				</section>
