@@ -15,7 +15,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 		<link rel="stylesheet" href="../shared/css/reveal.min.css">
-		<link rel="stylesheet" href="../shared/css/theme/night.css" id="theme">
+		<link rel="stylesheet" href="../shared/css/theme/sky.css" id="theme">
 		<!-- CSS from SCP -->
 		<link rel="stylesheet" href="../shared/css/scp.css">
 
@@ -70,101 +70,117 @@
 				<section>
 				    <h2>Types of Spatial datastores</h2>
 				    <table style="position:relative;right:34%;">
-				        <tr><td>TYPE</td><th>Relational</th><th>Document</th><th>Graph</th><th>Full Text index</th></tr>
+				        <tr><td>TYPE</td><th>Relational</th><th>Document</th><th>Full Text index</th><th>Graph</th></tr>
 				        <tr><td>EXAMPLE</td>
 				        	<td>PostGIS, MySQL, SQLServer, Oracle, & SpatiaLite</td>
 				            <td>MongoDB, Couchbase</td> 
-				            <td>Neo4J</td>				        
 				            <td>Lucene/Solr/ElasticSearch</td>
+				            <td>Neo4J</td>				        				            
 				        </tr>
 				        <tr><td>USE-CASE</td>
 				        	<td>Use for almost everything</td>
 				            <td>Document storage and search</td> 
-				            <td>Caching or Object Store</td>
+				            <td>Full text Indexing</td>
 				            <td>Relationships between "things"</td>
-				            <td>Large data processing</td>
-				            <td>Depends</td>
 				        </tr>
 				    </table>
 				</section>
-				
+
 				<section>
-				    <h2>On to Mongo</h2>
-				    <img  src="img/mongoshield.png">
-				    <p>&nbsp;</p>
-				    
+				    <h2>Start With PostGIS</h2>
+				    <img  src="img/postgis-logo.png">
+				    <p>&nbsp;</p>				    
 				</section>
-							
 				<section>
-				    <h2>A bit about MongoDB</h2>
+				    <h2>Basic Notes on PostGIS</h2>
 				    <ul>
-				        <li class="fragment">A document is just a bunch of attributes and values - think of it like  HashMap</li>
-				        <li class="fragment">Can be nested - helps avoid joins</li>
-				        <li class="fragment">Schemaless</li>
-				        <li class="fragment">Really good at fast writes - but you give up immediate consistency</li>
-				        <li class="fragment">Easy to horizontally scale</li>
+				        <li class="fragment">A spatial extension to PostgreSQL</li>
+				        <li class="fragment">Been around for at least 10 years</li>
+				        <li class="fragment">Full OGC Spec for MM-SQL</li>
+				        <li class="fragment">A metric ton of integration with other spatial software</li>
+				        <li class="fragment">THE standard in the FOSS GIS community</li>
 				    </ul>
 				</section>
 				
 				<section>
-					<h2>Now some spatial</h2>
-					<p>The spatial functionality Mongo currently has is:
-					<ol>
-					    <li class="fragment">Near ($near)</li>
-					    <li class="fragment">Containment ($geoWithin)</li>
-					    <li class="fragment">Intersection ($geoIntersects )</li>
-					</ol>
-					</p>
-					<br>
-					<div class="fragment">
-					<h4>It is all laid out here:</h4>
-					<a href="http://docs.mongodb.org/manual/applications/geospatial-indexes">Geospatial Indexes and Queries</a>
-					<br>
-					<h4>and here:</h4>
-					<a href="http://docs.mongodb.org/manual/core/geospatial-indexes">Geospatial Index Internals</a>
-				    </div>
-				</section>
-				
-				<section>
-					<h2>Two types of indices:</h2>
-					<ol>
-						<li class="fragment">2D - for flat surfaces</li>
-						<li class="fragment">2dsphere - helps with coords on an earth like sphere</li>
-					</ol>
-				</section>
-				
-				<section>
-				    <h2>Good to Know</h2>
+				    <h3>Pros</h3>
 				    <ul>
-				     <li class="fragment">Assumes coords. are between [-180 and 180)</li>
-				     <li class="fragment">Can handle any 2D coordinates</li>
-				     <li class="fragment">Has methods to handle curvature of the earth (spherical)</li>
-				     <li class="fragment"><a href="http://docs.mongodb.org/manual/tutorial/calculate-distances-using-spherical-geometry-with-2d-geospatial-indexes/">Formula to convert</a>
-				     to human readable units</li>
-                    </ul>
+				        <li class="fragment">Extremely Powerful and Flexible</li>
+				        <li class="fragment">Has Hibernate integration</li>
+				        <li class="fragment">Well Known Technology</li>
+				    </ul>
+				    <h3>Cons</h3>
+    			    <ul>
+				        <li class="fragment">Steep Learning Curve</li>
+				        <li class="fragment">All the same baggage as PostgreSQL</li>
+				        <li class="fragment">No good scaling story</li>
+				    </ul>
 				</section>
-				
+
+
 				<section>
-				    <h2>How do you make it work</h2>
-				    <div class="fragment">
-				    <h3>1. Put coordinates into an array</h3>
-				    <pre><code>
-{ loc : [ 50 , 30 ] }
-{ loc : { x : 50 , y : 30 } }
-{ loc : { foo : 50 , y : 30 } }
-{ loc : { lon : 40.739037, lat: 73.992964 } }
-                    
-                    If you use lattitude and longitude with a default index make sure to put [lon, lat]
-				    </code></pre>
-				    </div>
-				    <div class="fragment">
-				    <h3>2. Make a 2D index </h3> 
-				    <pre><code>
-				    	db.places.ensureIndex( { loc : "2d" } )
-				    </code></pre>
-				    </div>		    
-				    
+				    <h2>On to Mongo</h2>
+				    <img  src="img/mongoshield.png">
+				    <p>&nbsp;</p>				    
+				</section>							
+				<section>
+				    <h2>A bit about MongoDB</h2>
+				    <ul>
+				        <li class="fragment">A document is just a bunch of attributes and values - think of it like  HashMap</li>
+				        <li class="fragment">Very simple spatial functionality</li>
+				        <li class="fragment">Defaults to data units from GPS devices</li>
+				        <li class="fragment">Schemaless</li>
+				        <li class="fragment">Really good at fast writes - but you give up immediate consistency</li>
+				        <li class="fragment">Easy to horizontally scale</li>
+				    </ul>
+				</section>				
+				<section>
+				    <h3>Pros</h3>
+				    <ul>
+				        <li class="fragment">Simple to learn</li>
+				        <li class="fragment">Easy to setup</li>
+				        <li class="fragment">Benefits of NoSQL</li>
+				    </ul>
+				    <h3>Cons</h3>
+    			    <ul>
+				        <li class="fragment">Limited Spatial - only a few query types</li>
+				        <li class="fragment">No stored procedures ot DB error protection</li>
+				        <li class="fragment">Newer technology</li>
+				    </ul>
 				</section>
+
+				<section>
+				    <h2>Finally Lucene</h2>
+				    <img  src="img/lucene_logo_green_300.png">
+				    <p>&nbsp;</p>				    
+				</section>							
+				<section>
+				    <h2>A bit about Lucene</h2>
+				    <ul>
+				        <li class="fragment">2 steps - create an Index and then Search it</li>
+				        <li class="fragment">Most spatial functionality comes from <a href="https://github.com/spatial4j/spatial4j">Spatial4j</a></li>
+				        <li class="fragment">Very simple Spatial functionality</li>
+				        <li class="fragment">Schemaless</li>
+				        <li class="fragment">Index is just files on Disk</li>
+				        <li class="fragment">Also part of Solr and ElasticSearch</li>
+				    </ul>
+				</section>				
+				<section>
+				    <h3>Pros</h3>
+				    <ul>
+				        <li class="fragment">Simple to learn</li>
+				        <li class="fragment">Just files on disk</li>
+				        <li class="fragment">Great textual and spatial search</li>
+				    </ul>
+				    <h3>Cons</h3>
+    			    <ul>
+				        <li class="fragment">Limited Spatial - only a few query types</li>
+				        <li class="fragment">Not really geared towards frequently updated data</li>
+				        <li class="fragment">No on the fly field querying</li>
+				    </ul>
+				</section>
+				    
+
 				<section>
 				    <h2>JEE - CDI and JAX-RS</h2>
 				    <ul>
@@ -177,20 +193,11 @@
 				<section>
 				    <h2>Let's look at some code</h2>
 				    <h3>Build a spatial checkin service for national parks in US and Canada</h3>				
-					<h4><a href="https://github.com/thesteve0/openshift-mongo-spatial-jee6">Java - JEE using CDI and JAX-RS</a></h4>				    
-				    <p class="fragment">The full map front end app can be found here <http://javaparks-sipsummit.rhcloud.com  - it may take a while 
-				    to spin the application back up if nobody has visited in a while </p>
-				</section>
+					<h4><a href="https://github.com/thesteve0/openshift-mongo-spatial-jee6">MongoDB - JEE using CDI and JAX-RS</a></h4>				    
+				    <p class="fragment">The full map front end app can be found here <a href="http://javaparks-sipsummit.rhcloud.com"> Parks App </a>  - it may take a while to spin the application back up if nobody has visited in a while </p>
+				    <p class="fragment">We use <a href="http://leafletjs.com/">LeafletJS</a> for the nice map interactions and <a href="osm.org">
+				</section>								
 				
-				<section>
-				    <h2>Let's spin up a JEE (JBoss EAP) and MongoDB server</h2>
-				</section>
-
-				<section>
-				    <h2>One Source to Bind Them All</h2>
-				    <img src="../shared/img/Three_products.png"/>
-				    <br>&nbsp;
-				</section>
 				
 				<section>				    
 				    <img width="1052" height="664" src="img/our-stack.png">
@@ -198,21 +205,40 @@
 				</section>
 				
 				<section>
-				    <h2>But wait - there's more</h2>
-				    <ol>
-                        <li class="fragment"><strong>Free! No time limit</strong></li>
-                        <li class="fragment"><strong>3 gears (like servers) - each 512 Mb RAM, 1 Gb disk</strong></li>                        
-                        <li class="fragment"><strong>Simple pricing</strong></li>                       
-                    </ol>
-				</section>							
+					<h2>Git Repos to Try</h2>
+					<ol>
+				         <li class="fragment"><a href="https://github.com/thesteve0/parkshibernatespatial"> PostGIS</a></li>
+				         <li class="fragment"><a href="https://github.com/thesteve0/openshift-mongo-spatial-jee6"> MongoDB </a> with a
+				         <a href="https://www.openshift.com/blogs/spatial-jee6-jax-rs-cdi-mongodb-on-paas">blog post </li>
+				         <li class="fragment"><a href="https://github.com/thesteve0/SpatialLuceneIndexer">Lucene Indexer </a><a href="https://github.com/thesteve0/LuceneSpatial">and Search</a> with a <a href="https://www.openshift.com/blogs/create-a-spatial-rest-service-using-lucene-spatial-and-jee"> blog post</a></li>
+				         <li class="fragment">All of these are easy to try with <em>'rhc app create myapp jbosseap {mongodb|postgresql}' on OpenShift</em></li>
+				    </ol>
+				</section>
 				
-                
+				<section>
+					<h2>Recommendations</h2>
+					<table style="position:relative;right:34%;">
+				        <tr><th>Name</th><th>When to use</th></tr>
+				        <tr>
+				        	<td>PostGIS</td><td>Need, or forsee needing, full spatial power. Want power of RDBMS and updates with transactions. Want more mature technolgy</td>
+				        </tr>
+				        <tr>
+				        	<td>MongoDB</td><td>App just uses simple spatial queries. Frequent data updates. Need horizontal scalability</td>
+				        </tr>
+				         <tr>
+				        	<td>Lucene</td><td>App just uses simple spatial queries. Infrequent updates. Less moving parts. Advanced Full Text search</td>
+				        </tr>
+				    </table>
+					
+				</section>
+				
+				
 				<section>
 				    <h2>Let's wrap it up</h2>
 				    <ol>
-				         <li class="fragment">Openshift makes life great for you</li>
-				         <li class="fragment">Spatial is easy and fun with MongoDB</li>
-				         <li class="fragment">Free!</li>
+				         <li class="fragment">More than Google maps is available for you in Java Land</li>
+				         <li class="fragment">Easy to build really interesting apps</li>
+				         <li class="fragment">OpenShift makes it easy to explore and build with these stacks</li>
 				    </ol>
                    <p class="fragment">Come hang out with us:<br>
                    #openshift on freenode irc <br>
@@ -223,7 +249,6 @@
 
 			</div>
 			<img style="position:fixed;width:15%;z-index:30;bottom:20px;left:20px;" src="../shared/img/RH_logo-trans_reverse.png"/>
-			<img style="position:fixed;width:15%;z-index:30;bottom:20px;right:102px;" src="img/AMDLogo.png"/>
 		</div>	
 
 		<script src="../shared/lib/js/head.min.js"></script>
