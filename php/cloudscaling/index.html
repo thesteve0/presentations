@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Cloud Scaling</title>
+
+		<meta name="description" content="Scaling your applications in the cloud">
+		<meta name="author" content="Steven Citron-Pousty">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../shared/css/reveal.min.css">
+		<link rel="stylesheet" href="../shared/css/theme/night.css" id="theme">
+		<!-- CSS from SCP -->
+		<link rel="stylesheet" href="../shared/css/scp.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../shared/lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../shared/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section>
+					<h2>Building Your Apps for Scaling in the Cloud, YO!</h2>
+					<br>
+					<p>Presented by:</p>
+					<h3>Steven Pousty</h3>
+					<h3>@TheSteve0 on Twitter, IRC, Ingress, SmugMug, and Github</h3>
+				</section>
+
+
+				<section>
+					<h2>Agenda</h2>
+					<ol>
+                        <li class="fragment"><strong>Learn a bit about PaaS</strong></li>
+                        <li class="fragment"><strong>A little scaling</Strong></li>
+
+                    </ol>
+				</section>
+				
+				<section>
+				    <h2>Assumptions</h2>
+				    <ol>
+                        <li><strong>I present some of what and know and we discuss</strong></li>
+                    </ol>
+				</section>
+													
+				<section>
+				    <h2>Scaling - what is web scale?</h2>
+				     <img width="512" height="512" src="img/moby-dick.jpg">
+				    
+				</section>
+				
+				<section>
+				   <h2>Two types of scaling </h2>
+				   <ol>
+				       <li>Vertical - bigger, stronger, faster</li>
+				       <li>Horizontal - swarm baby swarm</li>
+				   </ol>
+               </section>
+               
+               <section>
+                    <img src="img/sumo.jpg">
+               </section>
+               
+               <section>
+                    <img width="900" height="660" src="img/ants.jpg">
+               </section>
+				
+                <section>
+				    <h2>Why did this take so long?</h2>
+				    <ul>
+				        <li class="fragment">Cheap Commodity "hardware"</li>   
+				        <li class="fragment">Ease of creation and deletion</li>
+				        <li class="fragment">Software built to grow sideways</li>
+				    </ul>
+				</section>
+				
+				<section>
+				    <h2>OpenShift Architecture</h2>
+				    <img src="img/arch.jpg">				
+				</section>
+				
+				<section>
+				    <h2>OpenShift Scaling</h2>
+				    <img src="img/scaling.jpg">				
+				</section>
+
+				<section>
+					<h2>Micro Services</h2>
+					<p> Fowler has a <a href="http://martinfowler.com/articles/microservices.html">page</a></p>
+					<img width="850" height="520" src="img/basicmicro.png"><br />
+					<h8>image from that page</h8>
+				</section>
+				
+				<section>
+				    <h2>Scaling hints</h2>
+				    <ul>
+				        <li class="fragment">Avoid sessions</li>   
+				        <li class="fragment">Loosely couple your pieces</li>
+				        <li class="fragment">Design for retries and small pieces failing</li>
+				        <li class="fragment">Use the architecture of the web for you</li>
+				        <li class="fragment">Caching is your friend</li>
+				    </ul>
+				</section>
+				
+				<section>
+				    <h2>Let's wrap it up</h2>
+				    <ol>
+				         <li class="fragment">If Cloud then architect from the beginning</li>
+				         <li class="fragment">These patterns get your more flexibility, resiliance, and capacity</li>
+				         <li class="fragment">SLAs don't help when your app is down</li>
+				    </ol>		    
+				</section>
+
+			</div>
+			<img style="position:fixed;width:15%;z-index:30;bottom:20px;left:20px;" src="../shared/img/RH_logo-trans_reverse.png"/>
+		</div>	
+
+		<script src="../shared/lib/js/head.min.js"></script>
+		<script src="../shared/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../shared/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../shared/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../shared/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../shared/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../shared/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../shared/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: '../shared/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: '../shared/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
