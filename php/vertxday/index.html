@@ -46,7 +46,7 @@
 					<br>					
 					<p>Presented by:</p>
 					<h3>Steven Pousty</h3>
-					<h3 style="color:yellow;"">talks.thesteve0.com/vertxday</h3>
+					<h3 style="color:yellow;">talks.thesteve0.com/vertxday</h3>
 					<h3>@TheSteve0 on Twitter, IRC, Instagram, Ingress, SmugMug, and Github</h3>
 				</section>
 			
@@ -70,22 +70,32 @@
 				<section>
 				    <h2>But I know EC2...</h2>
 				    <img width="700" height="550" src="img/Iaas-vs-paas.png">
-				</section>
-				
+				</section>			
+
 				<section>
-				    <h2>One Source to Bind Them All</h2>
-				    <img src="../shared/img/Three_products.png"/>
-				    <br>&nbsp;
-				</section>
-			
+					<h1>Vert.x</h1>
+					<ul>
+				    	<li class="fragment">Polyglot - anything that runs on JVM</li>
+				    	<li class="fragment">Asynchronous or Synchronous</li>
+				    	<li class="fragment">Non-blocking IO (based on Netty)</li>
+				    	<li class="fragment">Event Bus and Websockets out of the box</li>
+				    	<li class="fragment">Tons-o-modern Web Utility functions/li>
+			    	</ul>	
+				</section>	
+
 				<section>
-				    <h2>But wait - there's more</h2>
-				    <ol>
-                        <li class="fragment"><strong>Free! No time limit</strong></li>
-                        <li class="fragment"><strong>3 gears (like servers) - each 512 Mb RAM, 1 Gb disk</strong></li>
-                        <li class="fragment"><strong>Auto-scaling</strong></li>
-                        <li class="fragment"><strong>Simple pricing</strong></li>                        
-                    </ol>
+					<h2>Architecture and Terms pt I</h2>
+					<img width="500" height="396" src="img/openshift-vert.x-verticles-diagram.png">
+				</section>
+
+				<section>
+					<h2>Architecture and Terms pt II</h2>
+					<img width="600" height="470" src="img/openshift-vert.x-modules-eventbus-diagram.png">
+				</section>
+
+				<section>
+					<h2>Architecture and Terms pt III</h2>
+					<img width="400" height="600" src="img/openshift-vert.x-cluster-diagram.png">
 				</section>
 				
 				<section>
@@ -95,20 +105,9 @@
 			    	</h3> 
 					<h3>So simple - anyone can do it</h3>
 				</section>
-
-					
-				<section>
-				    <h2>What you get</h2>
-				    <ul>
-				    	<li class="fragment">Polyglot of course</li>
-				    	<li class="fragment">Try it easily with a URL</li>
-				    	<li class="fragment">Data sources right there</li>
-				    	<li class="fragment">Horizontal scaling out of the box!!</li>
-				    </ul>
-				</section>
 				
 				<section>
-				    <h2>Differences</h2>
+				    <h2>Differences from usual Vert.x deploy</h2>
 				    <ul>
 						<li class="fragment">No command line instead vertx.env</li>
 						<li class="fragment">On a scalable, not really made for different verticles in different gears</li>
@@ -118,6 +117,14 @@
 				</section>
 
 				<section>
+					<h2>Scenario</a></h2>
+					<li class="fragment">Build a flight tracker application that updates in real time</li>
+					<li class="fragment">Use <a href="https://developer.flightstats.com/">FlightStats.com API</a></li>					
+
+				</section>
+				
+
+				<section>
 					<h2>Enough Talk - <a href="https://github.com/thesteve0/flighttracker">CODE!</a></h2>
 					<img  src="img/kfp.jpg">
 				    <p>&nbsp;</p>
@@ -125,7 +132,7 @@
 				
 				<section>
 					<h2>You get!!! -<br />
-					 <a href="http://flighttracker-spatial.rhcloud.com/">http://flighttracker-spatial.rhcloud.com/!</a>
+					 <a href="http://flighttracker-spatial.rhcloud.com/">http://flighttracker-spatial.rhcloud.com/ or bit.ly/flttrack !</a>
 					 </h2>
 
 				    <p>&nbsp;</p>
@@ -135,10 +142,10 @@
 				<section>
 				    <h2>Let's wrap it up</h2>
 				    <ol>
-				         <li class="fragment">Openshift makes life great for you</li>
-				         <li class="fragment">Vert.x is great on OpenShift and getting better</li>
+				         <li class="fragment">Vert.x is async and awesome without needing to know Node.js</li>
+				         <li class="fragment">Vert.x is great on OpenShift and getting better - blog <a href="https://www.openshift.com/blogs/async-web-apps-for-the-masses-running-vertx-on-openshift">post here</a> </li>
 				         <li class="fragment">Free!</li>
-				         <li class="fragment">Github repo: <a href="https://github.com/thesteve0/flighttracker">https://github.com/thesteve0/flighttracker</a></li>
+				         <li class="fragment">Github repo: <a href="https://github.com/thesteve0/flighttracker">https://github.com/thesteve0/flighttracker</a> </li>
 				    </ol>
                    <p class="fragment">Come hang out with us:<br>
                    #openshift or #openshift-dev on freenode irc <br>
