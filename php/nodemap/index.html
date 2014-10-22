@@ -1,296 +1,299 @@
 <!doctype html>
 <html lang="en">
 
-	<head>
-		<meta charset="utf-8">
+  <head>
+    <meta charset="utf-8">
 
-		<title>Leaflet, Node.JS, and MongoDB for an Easy and Fun Web Mapping Experience</title>
+    <title>Leaflet, Node.JS, and MongoDB for an Easy and Fun Web Mapping Experience</title>
 
-		<meta name="description" content="Leaflet, Node.JS, and MongoDB for an Easy and Fun Web Mapping Experience">
-		<meta name="author" content="Steven Pousty">
+    <meta name="description" content="Leaflet, Node.JS, and MongoDB for an Easy and Fun Web Mapping Experience">
+    <meta name="author" content="Steven Pousty">
 
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="../shared/css/reveal.css">
-		<link rel="stylesheet" href="../shared/css/theme/night.css" id="theme">
-		<!-- CSS from SCP 
-		<link rel="stylesheet" href="../shared/css/scp.css">
-		-->
-		
-		<!-- For syntax highlighting -->
-		<link rel="stylesheet" href="../shared/lib/css/zenburn.css">
+    <link rel="stylesheet" href="../shared/css/reveal.css">
+    <link rel="stylesheet" href="../shared/css/theme/night.css" id="theme">
+    <!-- CSS from SCP 
+    <link rel="stylesheet" href="../shared/css/scp.css">
+    -->
+    
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="../shared/lib/css/zenburn.css">
 
-		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
-		<script>
-			document.write( '<link rel="stylesheet" href="../shared/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-		</script>
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="../shared/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
 
-		<!--[if lt IE 9]>
-		<script src="lib/js/html5shiv.js"></script>
-		<![endif]-->
-	</head>
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
 
-	<body>
+  <body>
 
-		<div class="reveal">
+    <div class="reveal">
 
-			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
 
-				<section>
-					<h2>Leaflet, Node.JS, and MongoDB for an Easy and Fun Web Mapping Experience</h2>
-					<br>					
-					<h3>http://talks.thesteve0.com/nodemap</h3>
-					<p>Presented by:</p>
-					<h3>Steven Pousty</h3>
-					<h3>@TheSteve0 on Twitter, Ingress, SmugMug, IRC, and Github</h3>
-				</section>
+        <section>
+          <h2>Leaflet, Node.js, and MongoDB for an Easy and Fun Web Mapping Experience</h2>
+          <br>          
+          <h3>http://talks.thesteve0.com/nodemap</h3>
+          <p>Presented by:</p>
+          <h3>Steven Pousty</h3>
+          <h3>@TheSteve0 on Twitter, Ingress, SmugMug, IRC, and Github</h3>
+        </section>
 
+        <section>
+          <h2>Agenda</h2>
+          <ol>
+            <li class="fragment"><strong>A little about MongoDB and its spatial features</Strong></li>
+            <li class="fragment"><strong>A little about Node.js</Strong></li>
+            <li class="fragment"><strong>A little about Leaflet.js</Strong></li>
+            <li class="fragment"><strong>Learn a bit about PaaS</strong></li>                        
+            <li class="fragment"><strong>Make a cool mapping app</strong></li>
+          </ol>
+        </section>
+        
+        <section>
+          <h2>Assumptions</h2>
+          <ol>
+            <li class="fragment"><strong>You have worked with data</strong></li>
+            <li class="fragment"><strong>You write some JS code</strong></li>
+            <li class="fragment"><strong>You will ask questions</strong></li>
+          </ol>
+        </section>
+        
+        <section>
+          <h2>What's the scenario?</h2>
+          <ol>          
+            <li class="fragment"><strong>We work for a Vendor that sells souvenirs at National Parks in the United States and Canada</strong></li>
+            <li class="fragment"><strong>We are making a check-in service to help drive traffic to our stands</strong></li>
+            <li class="fragment"><strong>We want FOSS on the whole stack - NO LOCK IN</strong></li>
+            <li class="fragment"><strong>Due next week</strong></li>
+          </ol>
+        </section>
+        
+        <section>
+          <h2>By the end of this talk, you will be able to build this!</h2>
+          <h3><a href="http://fluentwebmap-spatial.rhcloud.com/">MAPPY!</a><h3>
+          <h2>http://bit.ly/1h5DJal</h2> 
+          <p>or</p> 
+          <h2>http://fur.ly/0/nodemap</h2>          
+        </section>
+        
+        <section>
+          <h2>On to Mongo</h2>
+          <img  src="img/mongoshield.png">
+          <p>&nbsp;</p>           
+        </section>
+              
+        <section>
+          <h2>A bit about MongoDB</h2>
+          <ul>
+            <li class="fragment">A document is just a bunch of attributes and values - think of it like a HashMap</li>
+            <li class="fragment">Can be nested - helps avoid joins</li>
+            <li class="fragment">Schemaless</li>
+            <li class="fragment">Really good at fast writes - but you give up immediate consistency</li>
+            <li class="fragment">Easy to horizontally scale</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h2>Now some spatial</h2>
+          <p>MongoDB spatial functionality:
+          <ol>
+            <li class="fragment">Near ($near)</li>
+            <li class="fragment">Containment ($geoWithin)</li>
+            <li class="fragment">Intersection ($geoIntersects)</li>
+          </ol>
+          </p>
+          <br>
+          <div class="fragment">
+            <h4>It is all laid out here:</h4>
+              <a href="http://docs.mongodb.org/manual/applications/geospatial-indexes">Geospatial Indexes and Queries</a>
+            <br>
+            <h4>and here:</h4>
+              <a href="http://docs.mongodb.org/manual/core/geospatial-indexes">Geospatial Index Internals</a>
+            <h4>and here:</h4>
+              <a href="http://docs.mongodb.org/manual/reference/operator/query-geospatial/">Geospatial queries</a>
+          </div>
+        </section>
+        
+        <section>
+          <h2>Two types of indices:</h2>
+          <ol>
+            <li class="fragment">2d - for flat surfaces</li>
+            <li class="fragment">2dsphere - for earth-like spheres</li>
+          </ol>
+        </section>
+        
+        <section>
+          <h2>Good to Know</h2>
+          <ul>
+            <li class="fragment">Handles <a href="http://geojson.org/">GeoJSON natively</a> - benefit of working in meters and always on a sphere</a></li>
+            <li class="fragment">Assumes coordinates between [-180 and 180)</li>
+            <li class="fragment"><a href="http://docs.mongodb.org/manual/tutorial/calculate-distances-using-spherical-geometry-with-2d-geospatial-indexes/">Formula to             convert</a> to human readable units</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h2>Making it work</h2>
+          <div class="fragment">
+            <h3>1a. Put coordinates into an array</h3>
+            <pre><code>
+    { loc : [ 50 , 30 ] }
+        
+    If you use latitude and longitude with a default index, 
+    make sure to use correct ordering: [lon, lat]
+            </code></pre>
+          </div>
+          <div class="fragment">
+            <h3>1b. Put coordinates in a GeoJSON format</h3> 
+            <pre><code>
+    { loc : 
+        { 
+            type : "Point" ,
+            coordinates : [ 40, 5 ]
+        } 
+    }
+            </code></pre>
+          </div>
+        </section>
+        
+        <section>
+          <h2>Making it work (cont.)</h2>
+            <div class="fragment">
+              <h3>2a. Make a 2d index </h3> 
+              <pre><code>
+              db.places.ensureIndex( { loc : "2d" } )
+              </code></pre>
+            </div>
+            <div class="fragment">
+              <h3>2b. Make a 2dsphere index </h3> 
+              <pre><code>
+              db.places.ensureIndex( { loc : "2dsphere" } )
+              
+              Can be a compound index
+              </code></pre>
+            </div>
+        </section>
+        
+        <section>
+          <h2>On to Node.js</h2>
+          <img  src="img/nodejs.png">
+          <p>&nbsp;</p>           
+        </section>
 
-				<section>
-					<h2>Agenda</h2>
-					<ol>
-                        <li class="fragment"><strong>A little about MongoDB Spatial</Strong></li>
-                        <li class="fragment"><strong>A little about Node.JS</Strong></li>
-                        <li class="fragment"><strong>A little about Leaflet.js</Strong></li>
-						<li class="fragment"><strong>Learn a bit about PaaS</strong></li>                        
-                        <li class="fragment"><strong>Make a cool mapping app</strong></li>
-                    </ol>
-				</section>
-				
-				<section>
-				    <h2>Assumptions</h2>
-				    <ol>
-                        <li class="fragment"><strong>You have worked with data</strong></li>
-                        <li class="fragment"><strong>You write some JS code</strong></li>
-                        <li class="fragment"><strong>You will ask questions</strong></li>
-                    </ol>
-				</section>
-				<section>
-					<h2>What's the scenario</h2>
-					<li class="fragment"><strong>We work for a Vendor that sells souvenirs at National Parks in the United States and Canada</strong></li>
-                    <li class="fragment"><strong>We are making a check in service to help drive traffic to our stands</strong></li>
-                    <li class="fragment"><strong>We want FOSS on the whole stack - NO LOCK IN</strong></li>
-                    <li class="fragment"><strong>Due next week</strong></li>
-                    </ol>
-				</section>
-				
-				<section>
-					<h2>By the end of this talk you can build this!</h2>
-					<h3><a href="http://fluentwebmap-spatial.rhcloud.com/">MAPPY!</a><h3>
-					<h2>http://bit.ly/1h5DJal</h2> 
-					<p>or</p> 
-					<h2>http://fur.ly/0/nodemap</h2>
-					
-				</section>
-				
-				<section>
-				    <h2>On to Mongo</h2>
-				    <img  src="img/mongoshield.png">
-				    <p>&nbsp;</p>				    
-				</section>
-							
-				<section>
-				    <h2>A bit about MongoDB</h2>
-				    <ul>
-				        <li class="fragment">A document is just a bunch of attributes and values - think of it like  HashMap</li>
-				        <li class="fragment">Can be nested - helps avoid joins</li>
-				        <li class="fragment">Schemaless</li>
-				        <li class="fragment">Really good at fast writes - but you give up immediate consistency</li>
-				        <li class="fragment">Easy to horizontally scale</li>
-				    </ul>
-				</section>
-				
-				<section>
-					<h2>Now some spatial</h2>
-					<p>The spatial functionality Mongo currently has is:
-					<ol>
-					    <li class="fragment">Near ($near)</li>
-					    <li class="fragment">Containment ($geoWithin)</li>
-					    <li class="fragment">Intersection ($geoIntersects )</li>
-					</ol>
-					</p>
-					<br>
-					<div class="fragment">
-					<h4>It is all laid out here:</h4>
-					<a href="http://docs.mongodb.org/manual/applications/geospatial-indexes">Geospatial Indexes and Queries</a>
-					<br>
-					<h4>and here:</h4>
-					<a href="http://docs.mongodb.org/manual/core/geospatial-indexes">Geospatial Index Internals</a>
-					<h4>and here:</h4>
-					<a href="http://docs.mongodb.org/manual/reference/operator/query-geospatial/">Geospatial
-					queries</a>
-				    </div>
-				</section>
-				
-				<section>
-					<h2>Two types of indices:</h2>
-					<ol>
-						<li class="fragment">2D - for flat surfaces</li>
-						<li class="fragment">2dsphere - helps with coords on an earth like sphere</li>
-					</ol>
-				</section>
-				
-				<section>
-				    <h2>Good to Know</h2>
-				    <ul>
-				    <li class="fragment">Handles <a href="http://geojson.org/">GeoJSON natively</a> - benefit of working in meters and always on a sphere</a></li>
-				     <li class="fragment">Assumes coords. are between [-180 and 180)</li>
-				     <li class="fragment"><a href="http://docs.mongodb.org/manual/tutorial/calculate-distances-using-spherical-geometry-with-2d-geospatial-indexes/">Formula to 						convert</a> to human readable units</li>
-                    </ul>
-				</section>
-				
-				<section>
-				    <h2>How do you make it work</h2>
-				    <div class="fragment">
-				    <h3>1a. Put coordinates into an array</h3>
-				    <pre><code>
-{ loc : [ 50 , 30 ] }    
-    If you use lattitude and longitude with a default index 
-           make sure to put [lon, lat]
-				    </code></pre>
-				    </div>
-				    <div class="fragment">
-				    <h3>1b. Put coordinates in a GeoJSON format </h3> 
-				    <pre><code>
-{ loc : { type : "Point" ,
-      coordinates : [ 40, 5 ]
-		} 
-}
-				    </code></pre>
-				    </div>
-				</section>
-				<section>
-					<h2>Make it work (cont.)</h2>
-				    <div class="fragment">
-				    <h3>2a. Make a 2DSphere index </h3> 
-				    <pre><code>
-				    	db.places.ensureIndex( { loc : "2dsphere" } )
-				    	can be a compound index
-				    </code></pre>
-				    </div>
-				    <div class="fragment">
-				    <h3>2b. Make a 2D index </h3> 
-				    <pre><code>
-				    	db.places.ensureIndex( { loc : "2d" } )
-				    </code></pre>
-				    </div>
-				    
-				    
-				</section>
-				<section>
-				    <h2>On to Node.JS</h2>
-				    <img  src="img/nodejs.png">
-				    <p>&nbsp;</p>				    
-				</section>
-
-				<section>
-				    <h2>Why all the fuss</h2>
-				    <ol>
-                        <li class="fragment"><strong>It's all in JavaScript</strong></li>
-                        <li class="fragment"><strong>You get great async behavior out of the box</strong></li>
-                        <li class="fragment"><strong>Fast and Lightweight for certain use cases - where you are not DB bound</strong></li>       
-                    </ol>
-				</section>	
-				<section>
-				    <h2>Steve's Unofficial "When you should use it"</h2>
-				    <ol>
-                        <li class="fragment"><strong>You are a team of JS programmers</strong></li>
-                        <li class="fragment"><strong>You want to serve up a lot of things really fast</strong></li>
-                        <li class="fragment"><strong>You don't need all the libraries that some other languages bring</strong></li>
-                    </ol>
-				</section>	
-				<section>
-					<h2>Just some perspective on the hype</h2>
-					<a href="http://www.youtube.com/watch?v=bzkRVzciAZg"><img  src="img/videoLink.jpg"> </a>
-				</section>
-				<section>
-				    <h2>Time for Leaflet</h2>
-				    <img  src="img/leaflet-logo.png">
-				    <p>&nbsp;</p>				    
-				</section>
-				<section>
-				    <h2>Quick into</h2>
-				    <ol>
-                        <li class="fragment"><strong>Lighweight JS client side library for doing great maps</strong></li>
-                        <li class="fragment"><strong>Works out of the box with OpenStreetMap (OSM) - as well as others</strong></li>
-                        <li class="fragment"><strong>Mobile ready</strong></li>
-                        <li class="fragment"><strong>Has a rich library of <a href="http://leafletjs.com/plugins.html">Plugins</a></strong></li>                        
-                    </ol>
-				</section>	
-				<section>
-					<h2>Enough Talk - <a href="https://github.com/thesteve0/fluentwebmap">CODE!</a></h2>
-					<img  src="img/kfp.jpg">
-				    <p>&nbsp;</p>
-				</section>
-				
-				<section>
-				    <h2>Bring it up fast!</h2>
-				    <img src="../shared/img/Three_products.png"/>
-				    <br>&nbsp;
-				</section>		
-						
-				<section>
-				    <h2>How ya feeling?</h2>
-				    <img  src="img/instructions.jpg">
-				    <p>&nbsp;</p>
-				</section>
-
-					
+        <section>
+          <h2>Why all the fuss?</h2>
+          <ol>
+            <li class="fragment"><strong>It's all in JavaScript</strong></li>
+            <li class="fragment"><strong>You get great async behavior out of the box</strong></li>
+            <li class="fragment"><strong>Fast and Lightweight for certain use cases - where you are not DB bound</strong></li>       
+          </ol>
+        </section>
+          
+        <section>
+          <h2>Steve's Unofficial "When to use Node.js" Guide</h2>
+          <ol>
+            <li class="fragment"><strong>You are a team of JS programmers</strong></li>
+            <li class="fragment"><strong>You want to serve up a lot of things really fast</strong></li>
+            <li class="fragment"><strong>You don't need all the libraries that some other languages bring</strong></li>
+          </ol>
+        </section>
+          
+        <section>
+          <h2>Just some perspective on the hype</h2>
+          <a href="http://www.youtube.com/watch?v=bzkRVzciAZg"><img  src="img/videoLink.jpg"> </a>
+        </section>
+        
+        <section>
+          <h2>Time for Leaflet</h2>
+          <img  src="img/leaflet-logo.png">
+          <p>&nbsp;</p>           
+        </section>
+        
+        <section>
+          <h2>Quick intro</h2>
+          <ol>
+            <li class="fragment"><strong>Lightweight JS client side library for doing great maps</strong></li>
+            <li class="fragment"><strong>Works out of the box with OpenStreetMap (OSM) and others</strong></li>
+            <li class="fragment"><strong>Mobile ready</strong></li>
+            <li class="fragment"><strong>Has a rich library of <a href="http://leafletjs.com/plugins.html">Plugins</a></strong></li>                        
+          </ol>
+        </section>
+          
+        <section>
+          <h2>Enough Talk - <a href="https://github.com/thesteve0/fluentwebmap">CODE!</a></h2>
+          <img  src="img/kfp.jpg">
+          <p>&nbsp;</p>
+        </section>
+        
+        <section>
+          <h2>Bring it up fast!</h2>
+          <img src="../shared/img/Three_products.png"/>
+          <br>&nbsp;
+        </section>    
+            
+        <section>
+          <h2>How ya feeling?</h2>
+          <img  src="img/instructions.jpg">
+          <p>&nbsp;</p>
+        </section>
                 
-				<section>
-				    <h2>Let's wrap it up</h2>
-				    <ol>
-				         <li class="fragment">Spatial is easy and fun with MongoDB, Node, & Leaflet</li>
-				         <li class="fragment">Openshift makes life great for you</li>				         
-				         <li class="fragment">You can do all this for free in a matter of minutes</li>
- 				         <li class="fragment">The price ($0) makes it so you can do this for any projet you want</li>
- 				         <li class="fragment">@ghaff - So simple even a marketing person can do it :-) <a href="http://wwos-bitmason.rhcloud.com">http://wwos-bitmason.rhcloud.com</a></li>
-				    </ol>
-                   <p class="fragment">Come hang out with us:<br>
+        <section>
+          <h2>Let's wrap it up</h2>
+          <ol>
+            <li class="fragment">Spatial is easy and fun with MongoDB, Node, & Leaflet</li>
+            <li class="fragment">Openshift makes life great for you</li>                
+            <li class="fragment">You can do all this for free in a matter of minutes</li>
+            <li class="fragment">The price ($0) makes it so you can do this for any project you want</li>
+            <li class="fragment">@ghaff - So simple even a marketing person can do it :-) <a href="http://wwos-bitmason.rhcloud.com">http://wwos-bitmason.rhcloud.com</a></li>
+          </ol>
+          <p class="fragment">Come hang out with us:<br>
                    #openshift on freenode irc <br>
                    OR <br>
                    users@lists.openshift.redhat.com</p>
-				    
-				</section>
+        </section>
 
-			</div>
-			<img style="position:fixed;width:15%;z-index:30;bottom:20px;left:20px;" src="../shared/img/RH_logo-trans_reverse.png"/>
-		</div>	
+      </div>
+      <img style="position:fixed;width:15%;z-index:30;bottom:20px;left:20px;" src="../shared/img/RH_logo-trans_reverse.png"/>
+    </div>  
 
-		<script src="../shared/lib/js/head.min.js"></script>
-		<script src="../shared/js/reveal.min.js"></script>
+    <script src="../shared/lib/js/head.min.js"></script>
+    <script src="../shared/js/reveal.min.js"></script>
 
-		<script>
+    <script>
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
 
-			// Full list of configuration options available here:
-			// https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				center: true,
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
 
-				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: '../shared/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: '../shared/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '../shared/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '../shared/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: '../shared/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: '../shared/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: '../shared/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: '../shared/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+    </script>
 
-				// Optional libraries used to extend on reveal.js
-				dependencies: [
-					{ src: '../shared/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: '../shared/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: '../shared/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: '../shared/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: '../shared/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-					{ src: '../shared/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-					// { src: '../shared/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
-					// { src: '../shared/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
-				]
-			});
-
-		</script>
-
-	</body>
+  </body>
 </html>
