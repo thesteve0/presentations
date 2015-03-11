@@ -40,7 +40,7 @@
 			<div class="slides">
 
 				<section>
-					<h2>Scaling Your App with Java, PaaS, and Microservices</h2>
+					<h2>Microservices and You: the Straight Dope</h2>
 					<br>
 					<p>Presented by:</p>
 					<h3>Steven Pousty</h3>
@@ -51,108 +51,136 @@
 				<section>
 					<h2>Agenda</h2>
 					<ol>
-                        <li class="fragment"><strong>Microservices and Scaling</strong></li>
-                        <li class="fragment"><strong>See it in action</Strong></li>
-
-                    </ol>
+	          <li class="fragment"><strong>Microservices: Pros and Cons</strong></li>
+	          <li class="fragment"><strong>See it in action</Strong></li>
+          </ol>
 				</section>
-				
+
 				<section>
 				    <h2>Assumptions</h2>
 				    <ol>
-                        <li><strong>You understand THE WEB</strong></li>
-                        <li><strong>You have written a web application with backend services</strong></li>
-                    </ol>
+              <li><strong>You understand THE WEB</strong></li>
+              <li><strong>You have written a web application with backend services</strong></li>
+            </ol>
 				</section>
-				
-				<section>				    
-				     <img width="640" height="480" src="img/roadkill.jpg">				    
-				</section>
-				
-				<section>				    
-				     <img width="601" height="440" src="img/roughdiagram.jpg">				    
-				</section>
-				
-				
+
 				<section>
-				   <h2>Let's Talk Microservices </h2>				   
-               </section>
-				
-				<section>					
+				     <img width="640" height="480" src="img/roadkill.jpg">
+				</section>
+
+				<section>
+				     <img width="601" height="440" src="img/roughdiagram.jpg">
+				</section>
+
+				<section>
+					<h2>Excuse me while I fire up my demo</h2>
+				</section>
+
+
+				<section>
+				   <h2>Let's Talk Microservices </h2>
+        </section>
+
+				<section>
 					<p> Fowler has a <a href="http://martinfowler.com/articles/microservices.html">page</a></p>
 					<img width="850" height="520" src="img/basicmicro.png"><br />
 					<h8>image from link above</h8>
 				</section>
-				
-				<section>					
-					<img width="560" height="460" src="img/conways-law.png">
-					
-				</section>
-				<section>					
-					<img width="748" height="430" src="img/likeSpotify.png">
-				</section>									
-				
+
 				<section>
-				   <h2>Helps with Horizontal Scaling </h2>
+					<h1>THERE ARE NO REQUIREMTNS FOR LANGUAGE OR APP SERVERS!</h1>
+					<h3>Very little talk of any technology</h3>
+				</section>
+
+				<section>
+					<img width="560" height="460" src="img/conways-law.png">
+				</section>
+
+				<section>
+					<img width="748" height="430" src="img/likeSpotify.png">
+				</section>
+
+				<section>
+					<h2>Hard Parts</h2>
+					<p class="fragment">Hardest is political/people</p>
+					<p class="fragment">How do you test, deploy and manage</p>
+					<p class="fragment">Untangling existing apps</p>
+					<h3 class="fragment">IT IS NOT RIGHT FOR ALL APPLICATIONS</h3>
+				</section>
+
+				<section>
+					<h2>Tools to help</h2>
+					<ul>
+							<li class="fragment">PaaS</li>
+							<li class="fragment">External Services in a (Private/Public) Cloud</li>
+							<li class="fragment">Microframeworks (JAX-RS, Sinatra, Flask...)</li>
+							<li class="fragment">API Generators</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Benefits</h2>
+					<ul>
+							<li class="fragment">Easier Maintenance</li>
+							<li class="fragment">Easier Communication</li>
+							<li class="fragment">More Team Autonomy</li>
+							<li class="fragment">More Automation of Grunt Work</li>
+					</ul>
+					<h3 class="fragment">Clear Boundaries Infinite Possibilities</h3>
+				</section>
+
+				<section>
+				   <h2>Example of Scaling </h2>
                </section>
-               
+
                <section>
                     <img src="img/sumo.jpg">
                </section>
-               
+
                <section>
                     <img width="900" height="660" src="img/ants.jpg">
-               </section>				              
-				
-				<section>
-				    <h2>OpenShift Architecture</h2>
-				    <img src="img/arch.jpg">				
-				</section>
-				
+               </section>
+
 				<section>
 				    <h2>OpenShift Scaling</h2>
-				    <img src="img/scaling.jpg">				
+				    <img src="img/scaling.jpg">
 				</section>
-				
-				
+
+
 				<section>
 				    <h2>Scaling hints</h2>
 				    <ul>
-				        <li class="fragment">Avoid sessions</li>   
+				        <li class="fragment">Avoid sessions</li>
 				        <li class="fragment">Loosely couple your pieces</li>
 				        <li class="fragment">Design for retries and small pieces failing</li>
 				        <li class="fragment">Use the architecture of the web for you</li>
 				        <li class="fragment">Use a platform can scale your load automatically </li>
-				        
+
 				    </ul>
 				</section>
-				
-				<section>
-					<h2>What about the bad parts?</h2>
-					<img width="640" height="480" src="img/instructions.jpg">					
-				</section>
-				
+
 				<section>
 					<h2>Enough talk - back to the demo</h2>
-					
+
 				</section>
-				
+
 				<section>
 				    <h2>Let's wrap it up</h2>
 				    <ol>
 				         <li class="fragment">Microservices has benefits with cloud type applications</li>
-				         <li class="fragment">These patterns give more flexibility, resiliance, and capacity</li>	
-				         <li class="fragment">Used <a href="http://www.openshift.com">OpenShift</a> to code rather than manage servers</li>	
-				         <li class="fragment">Used <a href="http://www.appdynamics.com/">AppDynamics</a> to monitor and improve our application</li>	
-				         <li class="fragment">Used <a href="http://blazemeter.com">Blazemeter</a> to drive and test all our services</li>	
-				         <li class="fragment">Used <a href="http://www.iron.io/mq">IronMQ</a> as our message queue to provide loose coupling</li>					     	         
-				    </ol>		    
+				         <li class="fragment">These patterns give more flexibility, resiliance, and capacity</li>
+				         <li class="fragment">Used <a href="http://www.openshift.com">OpenShift</a> to code rather than manage servers</li>
+				         <li class="fragment">Used <a href="http://www.appdynamics.com/">AppDynamics</a> to monitor and improve our application</li>
+				         <li class="fragment">Used <a href="http://blazemeter.com">Blazemeter</a> to drive and test all our services</li>
+				         <li class="fragment">Used <a href="http://www.iron.io/mq">IronMQ</a> as our message queue to provide loose coupling</li>
+								<li class="fragment">Used <a href="https://logentries.com/">LogEntries</a> to centralize logging</li>
+				    </ol>
 				</section>
 
-				
+
 			</div>
 			<img style="position:fixed;width:15%;z-index:30;bottom:20px;left:20px;" src="../shared/img/RH_logo-trans_reverse.png"/>
-		</div>	
+		</div>
 
 		<script src="../shared/lib/js/head.min.js"></script>
 		<script src="../shared/js/reveal.min.js"></script>
