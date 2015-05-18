@@ -1,0 +1,462 @@
+!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<!-- http://api.chab.us/buses -->
+
+		<title> Applications and containers at scale: OpenShift + Kubernetes + Docker</title>
+
+		<meta name="description" content=" Applications and containers at scale: OpenShift + Kubernetes + Docker">
+		<meta name="author" content="Steven Pousty">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../shared/css/reveal.css">
+		<link rel="stylesheet" href="../shared/css/theme/night.css" id="theme">
+		<!-- CSS from SCP -->
+		<link rel="stylesheet" href="../shared/css/scp.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../shared/lib/css/zenburn.css">
+
+	<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+	<script>
+		document.write( '<link rel="stylesheet" href="../shared/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+	</script>
+
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+  <body>
+    <div class="reveal">
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h2> Applications and containers at scale: </h2>
+          <h3>OpenShift + Kubernetes + Docker</h3>
+          <p>
+            <small>
+              <p>Presented by:</p>
+				<h3>Steven Pousty</h3>
+				<h3 style="color:yellow;"></h3>
+				<h3>@TheSteve0 on Twitter, IRC, Instagram, Ingress, Skype, SmugMug, and Github</h3>
+            </small>
+          </p>
+        </section> 
+        
+        <section>
+        	<h2>Agenda</h2>
+          	<ol>
+		        <li class="fragment">Cover the tech</li>
+		        <li class="fragment">Show some demos</li>
+		        <li class="fragment">Wrap it up</li>
+          	</ol>
+
+        	
+        </section>    
+
+        <section>
+        	<h2>Assumptions</h2>
+        	<ol>
+		        <li class="fragment">You have written web applications</li>
+		        <li class="fragment">You like things easy</li>
+          	</ol>
+        </section>    
+
+
+
+        <!--DOCKER//-->
+        <section id="intro-docker">
+          <h2>Docker</h2>
+          <img style="height: 500px; background-color: #FFF;" src="images/docker-logo.png" alt="Docker.io Logo" />
+        </section>
+        <section>
+          <h2>What is a Container?</h2>
+          <table>
+            <tr>
+              <td><img style="height: 300px;" src="images/docker_container.jpg" alt="Diagram of a multi-layered docker container" /></td>
+              <td style="vertical-align: middle;">
+                <ul>
+                  <li>In Docker parlance, a <em>container</em> is a running instance of an <em>image</em></li>
+                  <li>Based on linux containers (namepaces, control groups)</li>
+                  <li>Combines file system <em>layers</em> into a "Union File System"</li>
+                  <li>Includes all of the components necessary to run a process, store persistent data, or both</li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </section>
+        <section>
+          <h2>Containers vs. VMs</h2>
+          <img style="height: 500px;" src="images/docker_vm_diagram.jpg" alt="Docker and VM comparison diagram" />
+        </section>
+        <section>
+          <h2>Layers and UFS</h2>
+          <img style="height: 500px;" src="images/docker_container.png" alt="Diagram of a multi-layered docker container" />
+        </section>        
+        <section>
+          <h2>Images: More like <code>git</code> than <code>tar</code></h2>
+          <ul>
+            <li>Images can be pulled <em>from</em> and pushed <em>to</em> a remote registry.</li>
+            <li>Images can be versioned and tagged.</li>
+            <li><em>Containers</em> can be <code>diff</code>ed to show how they differ from their base images.</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Container Operations</h2>
+          <p>Instantiate a Docker container with <code>docker run</code>:</p>
+          <pre><code>$ docker run -i -t nhripps/centos /bin/bash
+bash-4.1# exit
+exit</code></pre>
+          <p>&nbsp;<br />List running and exited docker processes with <code>docker ps</code>:</p>
+          <pre><code>$ docker ps -l
+CONTAINER ID  IMAGE                  COMMAND      CREATED         STATUS      NAMES
+7c4ef3596fa5  nhripps/centos:latest  "/bin/bash"  49 seconds ago  Exited (0)  grave_newton</code></pre>
+          <p>&nbsp;<br />Rejoin containers with <code>docker attach</code>:</p>
+          <pre><code>$ docker start grave_newton
+grave_newton
+$ docker attach grave_newton
+bash-4.1# exit
+exit</code></pre>
+        </section>
+        <section>
+          <h2>Docker Containers as Daemons</h2>
+          <p>&nbsp;<br />Start a container as a detached process with <code>docker run -d</code>:</p>
+          <pre><code>$ docker run -d nhripps/nginx:base
+1aa9f0bd1418f951a590c12ad717ea8af639dd29969ee3f59dfd87da1da23c4e
+$ docker ps
+CONTAINER ID  IMAGE               COMMAND               PORTS   NAMES
+1aa9f0bd1418  nhripps/nginx:base  "/bin/sh -c '/usr/sb  80/tcp  elegant_bell</code></pre>
+          <p>&nbsp;<br />Use the <code>-P</code> flag to automatically map container ports to the Docker host:</p>
+          <pre><code>$ docker run -d -P nhripps/nginx:base
+1c2e06d8f85e6e034dfd1f7e822b32ed3f4ddf1d5760011d1e84a88a589f50f3
+$ docker ps
+CONTAINER ID  IMAGE               COMMAND               PORTS                  NAMES
+1c2e06d8f85e  nhripps/nginx:base  "/bin/sh -c '/usr/sb  0.0.0.0:49153->80/tcp  loving_mclean</code></pre>
+          <p>&nbsp;<br />Note that the process still runs as a <em>foreground</em> process within the container.</p>
+        </section>
+        <section>
+          <h2>Linking Containers</h2>
+          <table style="margin-left: auto; margin-right: auto;">
+            <tr>
+              <td><img style="background-color: #FFF;" src="images/docker_links.png" alt="Docker links diagram" /></td>
+              <td style="vertical-align: middle;">
+                <ul>
+                  <li>Containers on the same host can be linked together</li>
+                  <li>Links between containers are not accessible outside the host</li>
+                  <li>Links are shared via ENV and /etc/hosts</li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </section>        
+        <section>
+          <h2>Docker: Pros and Cons</h2>
+          <table style="margin-left: auto; margin-right: auto;">
+            <tr>
+              <td>
+                <p>PROS:</p>
+                <ul>
+                  <li>Extreme application portability</li>
+                  <li>Very easy to create and work with derivative images</li>
+                  <li>Fast boot on containers</li>
+                </ul>
+              </td>
+              <td>
+                <p>CONS:</p>
+                <ul>
+                  <li>Host-centric solution; not aware of anything else</li>
+                  <li>No higher-level provisioning</li>
+                  <li>No Developer Workflow</li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </section>
+        <!--KUBERNETES//-->
+        <section id="intro-kubernetes">
+          <h2>How we use Kubernetes</h2>
+          <img style="border: 0px;" height="300" width="500" src="images/kube_logo.jpg" alt="Kubernetes Logo" />
+        </section>
+        <section>
+          <h2>Kubernetes Terminology</h2>
+          <table style="margin-left: auto; margin-right: auto;">
+            <tr>
+              <td><img style="border: 0px;" src="images/kubernetes_minion.png" alt="Kubernetes minion diagram" /></td>
+              <td>&nbsp;</td>
+              <td style="vertical-align: middle;">
+                <dl>
+                  <dt>Kubernetes Node</dt>
+                  <dd>Kubernetes Node<br />A Docker host running the <em>kubelet</em> and the <em>proxy</em> service.<br />&nbsp;</dd>
+                  <dt>Pod</dt>
+                    <dd>One or more inter-related (linked) Docker containers.<br />&nbsp;</dd>
+                  <dt>Cluster</dt>
+                    <dd>A collection of one or more Minions.</dd>
+                </dl>
+              </td>
+            </tr>
+          </table>         
+        </section>
+        
+        <section>
+          <h2>Node Daemon:<br /><code>kubernetes-kubelet</code></h2>
+          <img style="border: 0px;" src="images/kubelet.png" alt="Kubelet works between etcd and docker." />
+          <ul>
+            <li>Primary responsilibity: pod metadata and management</li>
+            <li>Maintain a record of pod state</li>
+            <li>Take instructions from the cluster <em>master</em></li>
+          </ul>
+        </section>
+       
+        <section>
+          <h2>Kubernetes Daemon:<br /><code>kubernetes-proxy</code></h2>
+          <img style="border: 0px; height: 200px;" src="images/kubernetes_proxy.png" alt="The proxy maps a single port on the minion to all relevant pods" />         
+          <ul>
+          	<li>Mapping of a minion host port to a pod label is called a <strong>service</strong></li>
+            <li>The proxy service maps a common port <em>on every node</em> to relevant pods <em>across the entire cluster</em><br />&nbsp;</li>
+            <li>It can forward both HTTP and UDP </li>   
+          </ul>          
+        </section>       
+        <section>
+          <h2>Kubernetes Cluster Management - the control pane</h2>
+          <table style="margin-left: auto; margin-right: auto;">
+            <tr>
+              <td><img style="border: 0px;" src="images/kubernetes_master.png" alt="Kubernetes cluster master diagram" /></td>           
+              <td style="vertical-align: middle;">
+                <dl>
+                  <dt>Kubernetes API</dt>
+                  <dd>RESTful web API for Kubernetes, running on nginx<br />&nbsp;</dd>
+                  <dt>Scheduler</dt>
+                  <dd>One job: choose minions for pods<br />&nbsp;</dd>
+                  <dt>Controller Manager</dt>
+                  <dd>Monitoring service for deployed pods<br />&nbsp;</dd>
+                  <dt><code>kubecfg</code></dt>
+                  <dd><small>(A newer iteration of this is now called <em>kubectl</em> )</small><br />CLI for working with a Kubernetes cluster</dd>
+                </dl>
+              </td>
+            </tr>
+          </table>
+          <aside class="notes">
+            <p>A cluster master is a host that acts as both a front end and health monitor for a Kubernetes cluster. The
+            master it self does not run docker and therefore does not host pods. Instead, it provides a web API and runs
+            a simple monitoring service that checks for the existence of specified pod deployments.</p>
+            <p>Finally, the cluster master also provides a utility called kubecfg that enables users to interact with the
+            cluster.</p>
+          </aside>
+        </section>        
+        <section>
+          <h2>etcd</h2>
+          <ul>
+            <li>Highly available key/value data store</li>
+            <li>Built-in clustering support</li>
+            <li>RAFT consensus-based algorithm for updates</li>
+          </ul>
+          <img src="images/etcd_raft_consensus.gif" alt="Visualization of raft consensus" />
+          <aside class="notes">
+            <p>First, etcd. This is a highly available key/value store that provides the de-facto messaging layer
+            between each minion and a central controller. Strictly speaking, etcd doesn't <em>need</em> to live on
+            each minion, or on any minion. As long as there are one or more reachable instances of etcd that a
+            minion can communicate with, Kubernetes continues working.</p>
+            <p>etcd instances handle their own clustering. If you really want to get into the weeds, they
+            use the RAFT consensus algorithm to decide on the true current value for a given key. It makes
+            for a cool graphic, but we don't need to get deeper than this to use etc with Kubernetes.</p>
+          </aside>
+        </section>
+        <section>
+          <h2><code>controller-manager</code><br />and Replication Controllers</h2>
+          <table style="margin-left: auto; margin-right: auto;">
+            <tr>
+              <td><img src="images/controller_manager.png" alt="You tell controller-manager what you need, and it does the rest." /></td>
+              <td style="vertical-align: middle;">
+                <ul>
+                  <li>You tell it what you need, it decides which minions to deploy on</li>
+                  <li>Constant monitoring; starts and stops pods as necessary to match the count</li>
+                  <li>Decoupled from service proxying</li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </section>
+        <section>
+          <h2>The Kubernetes API</h2>
+          <p>A REST api to interact with Kubernetes </p>
+          <ul>
+            <li>Minions (docker hosts)</li>
+            <li>Pods (docker container configurations)</li>
+            <li>Services (port proxy mappings)</li>
+            <li><em>Replication Controllers</em> (replicated, monitored pod deployments)</li>
+          </ul>
+        </section>
+        
+        <!--OPENSHIFT 3: How is it built?//-->
+        <section id="intro-openshift-3">
+          <h2>OpenShift</h2>
+          <img style="height: 500px; background-color: #FFF;" src="images/openshift_logo.png" alt="OpenShift Logo" />
+        </section> 
+
+         <section >
+          <h2>What does OpenShift Bring to the Party</h2>
+          <ol>
+            <li class="fragment">A Built-in Software Defined Network</li>
+            <li class="fragment">A Well Defined Workflow from Code to Deployed Application</li>
+            <li class="fragment">A Much Friendlier Interface with Monitoring and Reporting</li>
+          </ol>
+        </section>  
+        <section >
+          <h2>Networking Layer</h2>
+          <ol>
+            <li class="fragment">Using OpenVSwitch</li>
+            <li class="fragment">Handles IP routing at the application level in terms of isolation and discoverability</li>
+            <li class="fragment">Provides Load Balancing - HAProxy in it's own pod</li>
+          </ol>
+        </section>    
+        <section>
+          <h2>Applications in OpenShift 3</h2>
+          <p>&nbsp;</p>
+          <table style="margin-left: auto; margin-right: auto;">
+            <tr>
+              <td style="width: 378px;"><img style="border: 0px; width: 373px; height: 241px;" src="images/application.png" /></td>
+              <td>&nbsp;</td>
+              <td style="vertical-align: middle;">
+                <p><code style="color: #F66;">config</code>, <em style="color: #CCC;">n.</em><br />A collection of Kubernetes <em>and</em> OpenShift 3 objects that describes any combination of pods, services, replicationControllers, environment variables and OpenShift 3 objects that we'll discuss in a few slides.<br />&nbsp;</p>
+                <p><code style="color: #F66;">template</code>, <em style="color: #CCC;">n.</em><br />A <em>parameterized</em> version of a config for generalized re-use.</p>
+              </td>
+            </tr>
+          </table>
+          <aside class="notes">
+            <p>Now let's take a more concrete look at applications. Given that we are already thinking differently about them, what
+            do they actually look like in a Kubernetes and Docker based system?</p>
+          </aside>
+        </section>
+        <section>
+          <h2>Build Options<br /></h2>
+          <p>&nbsp;</p>
+          <ol>
+          
+            <li class="fragment">docker-builder - pulls docker images and merges code</li>
+            <li class="fragment">Source-to-Image (STI) - take a docker image and source and run it through a build</li>
+            <li class="fragment">BuildConfig - A url for code + a build type above + auth code for using webhooks</li>
+          </ol>
+      </section>
+        
+        
+        <section>
+          <h2>Application Lifecycle:</h2>
+          <h3>Integrating with CI and CD through "triggers"</h3>
+          <img src="images/app_lifecycle.png" />
+          <table style="margin-left: auto; margin-right: auto;">
+            <tr>
+              <td>
+                <p>Make a platform that is aware of changes:<br />&nbsp;</p>
+                <ul>
+                  <li>In source code</li>
+                  <li>On a CI system</li>
+                  <li>In an image repository<br />&nbsp;</li>
+                </ul>
+                <p>...so that the entire product lifecycle is<br /><em>repeatable</em>, <em>fault-tolerant</em> and <em>automated</em>.</p>
+              </td>
+            </tr>
+          </table>
+          <aside class="notes">
+            When we talk about DevOps, we are talking about an environment where we continously iterate and deploy application code based on a series of gating operations.
+          </aside>
+        </section>
+        <section>
+          <h2>What we make easier</h2>
+          <p>&nbsp;</p>
+          <ul>
+            <li>Configurations</li>
+            <ul>
+              <li>Collections of Kubernetes and OpenShift 3 objects</li>
+              <li>Parameterized templates</li>
+              <li>Post-processed <code>configs</code></li>
+            </ul>
+            <li>Builds</li>
+            <ul>
+              <li>Where is the code coming from?</li>
+              <li>How do we turn it into a Docker image?</li>
+            </ul>
+            <li>Deployments</li>
+            <ul>
+              <li>When do we deploy?</li>
+              <li>How do we deploy?</li>
+              <li>What should the deployment look like?</li>
+            </ul>
+          </ul>
+        </section>
+        <section>
+          <h2>Teams and Management</h2>
+          <p>&nbsp;</p>
+          <ul>
+            <li>Users, Teams and Projects</li>
+            <ul>
+              <li>A <code style="color: #F66;">project</code> controls access to a set of resources</li>
+              <li>Projects have hard and soft resource limits</li>
+              <li>Projects are based on organizational boundaries</li>
+            </ul>
+            <li>Quota and Usage</li>
+            <ul>
+              <li>Leverage Kubernetes to get fine-grained resource control</li>
+              <li>Performance policies can be specified along many dimensions</li>
+            </ul>
+          </ul>
+          <aside class="notes">
+            <p>Finally, within OpenShift itself, we are going to be introducing a few more features to simplify the administration process</p>
+          </aside>
+        </section>
+        
+        <section>
+          <h1>Thank You!</h1>
+          <p>&nbsp;</p>
+          <p>&nbsp;</p>
+          <p>Learn More:</p>
+          <ul>
+            <li>Docker: <a href="https://docker.com/">docker.com</a></li>
+            <li>Kubernetes: <a href="https://github.com/GoogleCloudPlatform/kubernetes">github.com/GoogleCloudPlatform/kubernetes</a></li>
+            <li>OpenShift 3: <a href="https://github.com/openshift/origin">github.com/openshift/origin</a></li>
+          </ul>
+          <p>&nbsp;</p>
+        </section>
+      </div>
+    </div>
+			<img style="position:fixed;width:15%;z-index:30;bottom:20px;left:20px;" src="../shared/img/RH_logo-trans_reverse.png"/>
+		</div>	
+
+		<script src="../shared/lib/js/head.min.js"></script>
+		<script src="../shared/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../shared/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../shared/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../shared/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../shared/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../shared/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../shared/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: '../shared/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: '../shared/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
