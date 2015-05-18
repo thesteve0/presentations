@@ -100,7 +100,16 @@
         <section>
           <h2>Layers and UFS</h2>
           <img style="height: 500px;" src="images/docker_container.png" alt="Diagram of a multi-layered docker container" />
-        </section>        
+        </section>
+        <section>
+          <h2>Layers and UFS</h2>
+          <ul>
+            <li>One or more read-only file systems and one read/write file system<br />&nbsp;</li>
+            <li>All presented as a single file system via one of several methods: device mapper thin provisioning (direct-lvm, loopback-lvm) or at the filesystem level (btrfs, OverlayFS)<br />&nbsp;</li>
+            <li>Behavior is similar to using a LiveCD<br />&nbsp;</li>
+          </ul>
+          <p>&nbsp;<br />"Data Volume Container": A Docker container with only a read/write file system, either strictly within the container or linked to real storage on the host</p>
+        </section>
         <section>
           <h2>Images: More like <code>git</code> than <code>tar</code></h2>
           <ul>
