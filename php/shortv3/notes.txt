@@ -1,0 +1,391 @@
+f89ec5a87d4f3c8a1f30
+
+It seems clear the tech world thinks containers are pretty darn neat. This talk will look at how you can move beyond containers as atomic units of deployment to making a full Platform as a Service. In particular, this talk will focus on using Docker, Kubernetes, and OpenShift to build all the things needed above containers to make a full platform. The lessons learned with this technology stack would be applicable across any project that you want to move beyond deploying a few containers. Style will be informal with discussion!
+
+
+<!-- Opening -->
+<section>
+    <section>
+        <h1 style="font-size: 3.4em; margin-top: -25px;">Connecting Containers</h1>
+        <img src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/boxillusion.png" style="width: 210px; background-color: inherit; border: none; box-shadow: none;"/>
+        <h3>Building a PaaS with Docker and&nbsp;Kubernetes</h3>
+        <p>
+            Presented by<br/>
+            <a href="http://www.codemiller.com">Katie Miller</a> / <a
+                href="http://twitter.com/codemiller">@codemiller</a><br/>
+            <a href="http://thesteve0.wordpress.com">Steve Pousty</a> / <a
+                href="https://twitter.com/TheSteve0">@TheSteve0</a>
+        </p>
+    </section>
+    <section>
+        <img src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/lightbulb.png" style="height: 600px; background-color: inherit; border: none; box-shadow: none;"/>
+    </section>
+    <section>
+        <h2>Deployment Styles</h2>
+    </section>
+    <section>
+        <div>
+            <div style="color: rgb(190, 100, 50); font-weight: bold; padding-bottom: 20px;">Wait and See</div>
+            <div style="text-align: left"><span>request server </span><span><span style="color: rgb(190, 100, 50)">>></span> wait </span><span><span style="color: rgb(190, 100, 50)">>></span> wait some more </span><span><span style="color: rgb(190, 100, 50)">>></span> request deployment </span><span><span style="color: rgb(190, 100, 50)">>></span> while (environment issues) { reattempt deployment <span style="color: rgb(190, 100, 50)">>></span> wait } </span><span><span style="color: rgb(190, 100, 50)">>></span> in production</span></div>
+        </div>
+    </section>
+    <section>
+        <div>
+            <div style="color: rgb(190, 100, 50); font-weight: bold; padding-bottom: 20px;">Resource Loop</div>
+            <div style="text-align: left;"><span>request server </span><span><span style="color: rgb(190, 100, 50)">>></span> wait </span><span><span style="color: rgb(190, 100, 50)">>></span> request deployment </span><span><span style="color: rgb(190, 100, 50)">>></span> in production </span><span><span style="color: rgb(190, 100, 50)">>></span> app fails under load </span><span><span style="color: rgb(190, 100, 50)">>></span> request server...</span></div>
+        </div>
+    </section>
+    <section>
+        <div>
+            <div style="color: rgb(190, 100, 50); font-weight: bold; padding-bottom: 20px;">Procure Cure</div>
+            <div style="text-align: left;"><span>attempt to navigate IT Service Desk software </span><span><span style="color: rgb(190, 100, 50)">>></span> fail </span><span><span style="color: rgb(190, 100, 50)">>></span> acquire server on the sly </span><span><span style="color: rgb(190, 100, 50)">>></span> in&nbsp;"production" </span></div>
+        </div>
+    </section>
+    <section>
+        <div>
+            <div style="color: rgb(190, 100, 50); font-weight: bold; padding-bottom: 20px;">Friends in High Places</div>
+            <div style="text-align: left;"><span>failure in production </span><span><span style="color: rgb(190, 100, 50)">>></span> call in Chuck Norris </span><span><span style="color: rgb(190, 100, 50)">>></span> Norris whispers "you better run" </span><span> <span style="color: rgb(190, 100, 50)">>></span> the app runs</span></div>
+        </div>
+    </section>
+    <section>
+        <h2>Aims</h2>
+        <ul style="list-style-type: square;">
+            <li class="fragment">Freedom to choose best tool for the job, without config headaches</li>
+            <li class="fragment">Fast, easy, reproducible deployments, made up of small components wired together (&agrave; la microservices)</li>
+            <li class="fragment">Ability to scale pieces of a solution independently, to meet changing demand</li>
+            <li class="fragment">End battles between Dev and Ops; automated deployment pipeline; CI/CD</li>
+            	
+            <li class="fragment">Security and the ability to respond quickly to issues</li>
+        </ul>
+    </section>
+</section>
+<!-- Introduction to PaaS/OpenShift -->
+<section>
+    <section>
+        <h2>Platform as a Service</h2>
+        <img src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/cowsplatform.jpg" style="width: 600px;"/>
+    </section>
+    <section>
+        <img src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/paas.png" style="height: 600px; padding: 20px; background-color: white" />
+    </section>
+    <section>
+        <img src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/openshift-triangle.png" style="max-height: 500px; padding: 20px; background-color: white;"/>
+    </section>
+    <section>
+        <h2>Reasons to Rebuild</h2>
+        <div class="fragment">Act on lessons from the past three years of running a PaaS</div>
+        <div class="fragment" style="padding-top: 20px;">New technologies to build on, including Docker image-based packaging and large associated ecosystem</div>
+    </section>
+    <section>
+        <h2>The New Stack</h2>
+        <img src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/originv3stack.png" style="max-height: 500px;"/>
+    </section>
+ </section>
+<!-- Atomic Overview -->
+<section>
+    <section>
+        <img src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/projectatomic.png" style="width: 350px;padding: 20px;"/>
+    </section>
+    <section>
+    	<h2>Why touch the OS</h2>
+    	<h3 class="fragment">Change happens!</h3>
+    	<h3 class="fragment">Virtualisation and then Cloud</h3>
+    	<h3 class="fragment">A lot of experience with Linux and the growth of containers</h3>
+    </section>
+    <section>
+    	<h2>RPM-OSTree</h2>
+    	<h4>A system to compose RPMs on a server side into an OSTree repository</h4>
+    </section>
+    <section>
+    	<h2>Minimal System</h2>
+    	<h3 class="fragment">Best supported kernel in the world</h3> 
+    	<h3 class="fragment">All the System Utilities you need and nothing else </h3>
+    </section>
+    <section>
+    	<h2>Containers first-class citizens</h2>
+    	<h3 class=fragment>Made for running containers</h3>
+    	<h3 class=fragment>Includes <a href="http://cockpit-project.org/" target="_blank">a console for management </a></h3>
+    </section>    
+    <section>
+        <h2 style="color: rgb(190, 100, 50)">Wins</h2>
+        	<div class="fragment">Fast boot: OS with just the good parts</div>
+        	<div class="fragment" style="margin-top: 20px;">Container management and security is its speciality</div>
+        	<div class="fragment" style="margin-top: 20px;">Friggin' awesome kernel</div>
+        </ol>
+    </section>
+</section>
+<!-- Docker Overview -->
+<section>
+    <section>
+        <img src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/docker-logo.png" style="height: 350px;padding: 20px; background-color: white;"/>
+    </section>
+    <section>
+    	<h2>Defining Container</h2>
+          <table>
+            <tr>
+              <td><img style="height: 300px;" src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/docker_container.jpg" alt="Diagram of a multi-layered docker container" /></td>
+              <td style="vertical-align: middle;">
+                <ul style="list-style-type: square;">
+                  <li>In Docker parlance, a <em>container</em> is a running instance of an <em>image</em></li>
+                  <li>Based on Linux containers (namespaces, control groups)</li>
+                  <li>Combines file system <em>layers</em> into a "Union File System"</li>
+                  <li>Includes all of the components necessary to run a process, store persistent data, or both</li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+    </section>
+    <section>
+          <h2>Containers vs. VMs</h2>
+          <img style="height: 500px;" src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/docker_vm_diagram.jpg" alt="Docker and VM comparison diagram" />
+	</section>
+	 <section>
+          <h2>Container Operations</h2>
+          <p>Instantiate a Docker container with <code>docker run</code>:</p>
+          <pre><code>$ docker run -i -t centos /bin/bash
+bash-4.1# exit
+exit</code></pre>
+          <p>&nbsp;<br />List running and exited docker processes with <code>docker ps</code>:</p>
+          <pre><code>$ docker ps -l
+CONTAINER ID  IMAGE                  COMMAND      CREATED         STATUS      NAMES
+7c4ef3596fa5  centos:latest  "/bin/bash"  49 seconds ago  Exited (0)  grave_newton</code></pre>
+          <p>&nbsp;<br />Rejoin containers with <code>docker attach</code>:</p>
+          <pre><code>$ docker start grave_newton
+grave_newton
+$ docker attach grave_newton
+bash-4.1# exit
+exit</code></pre>
+        </section>
+        <section>
+          <h2>'Diffing' a Container</h2>
+          <p>Add a label to a docker container and install wget:</p>
+          <pre><code>$ docker run -i -t --name="add_wget" centos /bin/bash
+bash-4.1# yum install -y wget
+...
+bash-4.1# exit</code></pre>
+          <p>Run a diff on the container after it has run:</p>
+          <pre><code>$ docker diff add_wget
+C /.bash_history
+C /etc
+A /etc/wgetrc
+C /tmp
+C /usr
+C /usr/bin
+A /usr/bin/wget
+C /usr/share
+C /usr/share/doc
+A /usr/share/doc/wget-1.12
+...</code></pre>
+    </section>
+    <section>
+      <h2>Containers as Daemons</h2>
+      <img style="height: 400px;" src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/docker_bunny.png" alt="Docker Containers Just Keep Going..." />
+      <p>A docker container runs until:</p>
+      <ul style="list-style-type: square;">
+        <li>The process inside it exits <em>or</em></li>
+        <li>You stop it with <code>docker stop &lt;container_name&gt;</code></li>
+      </ul>
+    </section>
+    <section>
+          <h2>Linking Containers</h2>
+          <table style="margin-left: auto; margin-right: auto;">
+            <tr>
+              <td><img style="background-color: #FFF;" src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/docker_links.png" alt="Docker links diagram" /></td>
+              <td style="vertical-align: middle;">
+                <ul style="list-style-type: square;">
+                  <li>Containers on the same host can be linked together</li>
+                  <li>Links between containers are not accessible outside the host</li>
+                  <li>Links are shared via ENV and /etc/hosts</li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+    </section>
+    <section>
+          <h2>Docker: Pros and Cons</h2>
+          <table style="margin-left: auto; margin-right: auto;">
+            <tr>
+              <td>
+                <p>PROS:</p>
+                <ul style="list-style-type: square;">
+                  <li>Extreme application portability</li>
+                  <li>Very easy to create and work with derivative images</li>
+                  <li>Fast boot on containers</li>
+                </ul>
+              </td>
+              <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              <td>
+                <p>CONS:</p>
+                <ul style="list-style-type: square;">
+                  <li>Host-centric solution; not aware of anything else</li>
+                  <li>No higher-level provisioning</li>
+                  <li>No usage tracking / reporting</li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </section>
+        <section>
+            <h2 style="color: rgb(190, 100, 50)">Wins</h2>
+    		<div class="fragment">Efficient resource usage</div>
+    		<div class="fragment" style="margin-top: 20px;">BYOB - bring your own bits</div>
+    		<div class="fragment" style="margin-top: 20px;">A standard way for people to make container images</div>
+    		<div class="fragment" style="margin-top: 20px;">Huge ecosystem</div>	
+        </section>
+</section>
+<!-- Kubernetes Overview -->
+<section>
+    <section>
+        <img src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/kubernetes.png" style="width: 750px; padding: 20px;" />
+    </section>
+    <section>
+            <h3>kubernetes:</h3>
+        <div class="fragment">
+           Greek for 'pilot' or 'helmsman'
+        </div>
+        <div class="fragment" style="margin-top: 20px">"a system for managing containerised applications across multiple hosts"</div>
+        <div class="fragment" style="margin-top: 20px">declarative model</div>
+        <div class="fragment" style="margin-top: 20px">open source project by Google</div>
+    </section>
+    <section>
+        <a href="https://github.com/GoogleCloudPlatform/kubernetes/graphs/contributors" target="_blank"><img src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/kubecommits.png" style="height: 720px; margin-top: -40px;" /></a>
+    </section>
+    <section>
+        <h2>Terminology and Architecture</h2>
+        <img src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/enterprisearchitecture.png" style="width: 460px; padding: 10px; background: white;" />
+    </section>
+    <section>
+        <h2>Concepts</h2>
+        <div style="float: left; max-width: 320px;"><span><img src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/pod.png"></span><span><img style="background: white;" src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/service.png"></span></div>
+        <div style="float: right; max-width: 640px; padding-top: 20px;">
+            <ul style="list-style-type: none;">
+                <li class="fragment" data-fragment-index="1" style="padding-bottom: 5px;"><span style="font-weight: bold; color: rgb(190, 100, 50);">pod: </span>colocated group of Docker containers that share an IP and storage volumes</li>
+                <li class="fragment" data-fragment-index="2" style="padding-bottom: 5px;"><span style="font-weight: bold; color: rgb(190, 100, 50);">service: </span>provides a single, stable name for set of pods and acts as basic load balancer</li>
+                <li class="fragment" data-fragment-index="3" style="padding-bottom: 5px;"><span style="font-weight: bold; color: rgb(190, 100, 50);">replication controller: </span>manages the lifecycle of pods and ensures specified number are running</li>
+                <li class="fragment" data-fragment-index="4"><span style="font-weight: bold; color: rgb(190, 100, 50);">label: </span>used to organise and select groups of objects</li>
+            </ul>
+        </div>
+    </section>
+    <section>
+        <h2>Components</h2>
+        <div style="float: left; max-width: 320px;"><img style="border: none; box-shadow: none; background: inherit;" src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/components.png"></div>
+        <div style="float: right; max-width: 640px; padding-top: 20px;">
+            <ul style="list-style-type: none;">
+                <li class="fragment" style="padding-bottom: 5px;"><span style="font-weight: bold; color: rgb(190, 100, 50);">cluster: </span>compute resources on top of which containers are built</li>
+                <li class="fragment" style="padding-bottom: 5px;"><span style="font-weight: bold; color: rgb(190, 100, 50);">node: </span>Docker host running <em>kubelet</em> (node agent) and <em>proxy</em> services</li>
+                <li class="fragment" style="padding-bottom: 5px;"><span style="font-weight: bold; color: rgb(190, 100, 50);">master: </span>hosts cluster-level control services, including the API server, scheduler, and controller manager</li>
+                <li class="fragment"><span style="font-weight: bold; color: rgb(190, 100, 50);">etcd: </span>distributed key-value store used to persist Kubernetes system state</li>
+            </ul>
+        </div>
+    </section>
+     <section>
+        <h2 style="color: rgb(190, 100, 50)">Wins</h2>
+        <h3 class="fragment">Runtime and operational management of containers</h3>
+        <div class="fragment" style="margin-top: 20px;">Manage related Docker containers as a unit</div>
+        <div class="fragment" style="margin-top: 20px;">Container communication across hosts</div>
+        <div class="fragment" style="margin-top: 20px;">Availability and scalability through automated deployment and monitoring of pods and their replicas, across&nbsp;hosts</div>
+    </section>
+</section>
+<!-- OpenShift v3 Overview -->
+<section>
+    <section>
+        <h2>Rebuilding OpenShift</h2>
+        <img src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/originpanda.png" style="width: 600px;  padding-top: 20px; background: white;"/>
+    </section>
+    <section>
+        <h2>Design Goal</h2>
+        <h3><span style="color: rgb(190, 100, 50)">Kubernetes</span> provides a </br>container runtime</h3>
+        <h3><span style="color: rgb(190, 100, 50)">OpenShift</span> provides the </br>DevOps and team environment</h3>
+    </section>
+    <section>
+        <h2>Concepts</h2>
+        <div>
+            <ul style="list-style-type: none;">
+                <li class="fragment" style="padding-bottom: 5px;"><span style="color: rgb(190, 100, 50); font-weight: bold;">application: </span>one or more pods linked together by services; distinct, interconnected components</li>
+                <li class="fragment" style="padding-bottom: 5px;"><span style="color: rgb(190, 100, 50); font-weight: bold;">config: </span>collection of objects describing combination of pods, services, replication controllers, environment variables, and other components</li>
+                <li class="fragment" style="padding-bottom: 5px;"><span style="color: rgb(190, 100, 50); font-weight: bold;">template: </span>parameterised version of config for generalised reuse</li>
+                <li class="fragment" style="padding-bottom: 5px;"><span style="color: rgb(190, 100, 50); font-weight: bold;">build config: </span>object defining source code URI, authentication for change notifications (webhooks), and build type (<em>source-to-image</em> or <em>docker-builder</em>)</li>
+                <li class="fragment"><span style="color: rgb(190, 100, 50); font-weight: bold;">deployment: </span>image and settings for it: replication controller, trigger policies, and deployment strategy</li>
+            </ul>
+        </div>
+    </section>
+    <section>
+        <img src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/openshiftallinone.png" style="width: 900px;"/>
+    </section>
+    <section>
+        <h2>Features</h2>
+         <ul style="list-style-type: square;">
+            <li class="fragment" style="padding-bottom: 10px">Ability to build, manage, and deliver application descriptions at scale</li>
+            <li class="fragment" style="padding-bottom: 10px">Turning source code into new deployable components</li>
+            <li class="fragment">Support for common workflows, the application lifecycle, and teams
+                <ul class="fragment" style="list-style-type: circle;">
+                    <li>Integration of CI/CD flows into Kubernetes; trigger builds manually or from code, app, or image changes</li>
+                    <li>Support for projects and multi-user usage and tracking; default network isolation based on team access control</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>Demo</h2>
+        <img src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/demo.gif" style="width: 700px;" />
+    </section>
+    <section>
+        <h2 style="color: rgb(190, 100, 50)">Wins</h2>
+        <div class="fragment">Build a single artifact containing the dependency chain for <strong>reproducible deployments</strong></div>
+        <div class="fragment" style="margin-top: 20px;"><strong>Share</strong> common technology stacks and common <strong>patterns</strong> for rolling out changes</div>
+        <div class="fragment" style="margin-top: 20px;"><strong>Efficiently manage</strong> thousands of applications, auto-scaling components independently and updating them en masse</div>
+        <div class="fragment" style="margin-top: 20px;"><strong>Easily provision</strong> new resources at scale and subdivide them for teams</div>
+        <div class="fragment" style="margin-top: 20px;">Responsive, change-aware platform supports <strong>fault-tolerant, automated, and repeatable</strong> builds and deployments</div>
+        <div class="fragment roll-in" style="z-index: 2; position: absolute; top: 200px; left: 230px;"><img src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/norris.gif" style="width: 500px;" /></div>
+    </section>
+</section>
+<!-- Conclusion -->
+<section>
+    <section>
+        <h2>Conclusion</h2>
+        <ul style="list-style-type: square;">  
+	        <li class="fragment">We covered A LOT</li>      	
+        	<li class="fragment">For us, it's the Linux story again - come build with us!</li>
+        	<li class="fragment">Your world as a sys admin or developer is looking bright </li>
+        		<ul class="fragment">
+        			<li class="fragment">Use containers to have an agreed upon way to managage server bits</li>        			
+        			<li class="fragment">We can automate some annoying things - i.e. dev env creation or autoscaling</li>
+        			<li class="fragment">Template an entire application - infra and code </li>
+        			<li class="fragment">OpenShift packages all this technology into one nice package</li>        			
+        		</ul>
+        </ul>
+    </section>
+</section>
+<!-- References/Resources -->
+<section>
+    <section>
+        <h2>References and Resources</h2>
+        <ul style="list-style-type: square;">
+            <li><a href="http://reinvent-hripps.rhcloud.com/#/2" target="_blank">Docker, Kubernetes, and OpenShift 3 labs</a></li>
+            <li><a href="http://docker.io/" target="_blank">Docker website</a></li>
+            <li><a href="https://github.com/GoogleCloudPlatform/kubernetes" target="_blank">Kubernetes source</a></li>
+            <li><a href="http://kubernetes.io" target="_blank">Kubernetes website</a></li>
+            <li><a href="https://github.com/openshift/openshift-pep/blob/master/openshift-pep-013-openshift-3.md" target="_blank">OpenShift 3.x System Design PEP</a></li>
+            <li><a href="https://github.com/openshift/origin" target="_blank">OpenShift Origin source</a></li>
+            <li><a href="http://www.openshift.org/" target="_blank">OpenShift Origin website</a></li>
+            <li><a href="https://blog.openshift.com/openshift-v3-deep-dive-docker-kubernetes/" target="_blank">OpenShift v3 Deep Dive Tutorial</a></li>
+            <li><a href="https://blog.openshift.com/openshift-v3-platform-combines-docker-kubernetes-atomic-and-more/" target="_blank">OpenShift v3 Platform Announcement</a></li>
+        </ul>
+    </section>
+</section>
+<!-- End -->
+<section>
+    <section>
+        <h1>Connecting Containers</h1>
+        <img src="https://raw.githubusercontent.com/codemiller/connecting-containers/gh-pages/images/boxillusion.png" style="width: 210px; background-color: inherit; border: none; box-shadow: none;"/>
+        <h3><a href="http://containers.codemiller.com">http://containers.codemiller.com</a></h3>
+        <p>
+            Presented by<br/>
+            <a href="http://www.codemiller.com">Katie Miller</a> / <a
+                href="http://twitter.com/codemiller">@codemiller</a><br/>
+            <a href="http://thesteve0.wordpress.com">Steve Pousty</a> / <a
+                href="https://twitter.com/TheSteve0">@TheSteve0</a>
+        </p>
+    </section>
+</section>
+
