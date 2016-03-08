@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Microservices and you - introduction for mere mortals</title>
+
+		<meta name="description" content="Microservices and you - introduction for mere mortals">
+		<meta name="author" content="Steven Pousty">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../shared/css/reveal.min.css">
+		<link rel="stylesheet" href="../shared/css/theme/night.css" id="theme">
+		<!-- CSS from SCP -->
+		<link rel="stylesheet" href="../shared/css/scp.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../shared/lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../shared/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section>
+					<h2>Microservices and You: the Straight Dope</h2>
+					<br>
+					<h4>bit.ly/microvturbo</h4> 
+					<p>Presented by:</p>
+					<h3>Steven Pousty</h3>
+					<h3>@TheSteve0 on Twitter, IRC, Ingress, SmugMug, Skype, and Github</h3>
+				</section>
+
+
+				<section>
+					<h2>Agenda</h2>
+					<ol>
+	          <li class="fragment"><strong>Microservices: Pros and Cons</strong></li>
+	          <li class="fragment"><strong>Not enough time to see it in action</Strong></li>
+          </ol>
+				</section>
+
+				<section>
+				    <h2>Assumptions</h2>
+				    <ol>
+              <li><strong>You understand THE WEB</strong></li>
+              <li><strong>You have written a web application with backend services</strong></li>
+            </ol>
+				</section>
+
+				<section>
+				     <img width="640" height="480" src="img/roadkill.jpg">
+				</section>
+
+				<section>
+				     <img width="601" height="440" src="img/roughdiagram.jpg">
+				</section>
+
+				<section>
+				   <h2>Let's Talk Microservices </h2>
+        </section>
+
+				<section>
+					<p> Fowler has a <a href="http://martinfowler.com/articles/microservices.html">page</a></p>
+					<img width="850" height="520" src="img/basicmicro.png"><br />
+					<h8>image from link above</h8>
+				</section>
+
+				<section>
+					<h1>THERE ARE NO REQUIREMENTS FOR LANGUAGE OR APP SERVERS!</h1>
+					<h3>Very little talk of any technology</h3>
+				</section>
+
+				<section>
+					<img width="560" height="460" src="img/conways-law.png">
+				</section>
+
+				<section>
+					<img width="748" height="430" src="img/likeSpotify.png">
+				</section>
+
+				<section>
+					<h2>Hard Parts</h2>
+					<p class="fragment">Hardest is political/people</p>
+					<p class="fragment">How do you test, deploy and manage</p>
+					<p class="fragment">Untangling existing apps</p>
+					<h3 class="fragment">IT IS NOT RIGHT FOR ALL APPLICATIONS</h3>
+				</section>
+
+				<section>
+					<h2>Tools to help</h2>
+					<ul>
+							<li class="fragment">PaaS</li>
+							<li class="fragment">External Services in a (Private/Public) Cloud</li>
+							<li class="fragment">Microframeworks (JAX-RS, Sinatra, Flask...)</li>
+							<li class="fragment">API Generators</li>
+					</ul>
+				</section>
+				
+				<section>
+					<img width="720" height="373" src="img/kubeturbo-sc1.png">
+				</section>
+
+				<section>
+					<h2>Benefits</h2>
+					<ul>
+							<li class="fragment">Easier Maintenance</li>
+							<li class="fragment">Easier Communication</li>
+							<li class="fragment">More Team Autonomy</li>
+							<li class="fragment">More Automation of Grunt Work</li>
+					</ul>
+					<h3 class="fragment">Clear Boundaries Infinite Possibilities</h3>
+				</section>
+				
+				<section>
+				    <h2>Let's wrap it up</h2>
+				    <ol>
+				         <li class="fragment">Microservices has benefits with cloud type applications</li>
+				         <li class="fragment">These patterns give more flexibility, resiliance, and capacity</li>
+				         <li class="fragment">Used <a href="http://www.openshift.com">OpenShift</a> to code rather than manage servers</li>				         
+				    </ol>
+				</section>
+
+
+			</div>
+			<img style="position:fixed;width:15%;z-index:30;bottom:20px;left:20px;" src="../shared/img/RH_logo-trans_reverse.png"/>
+		</div>
+
+		<script src="../shared/lib/js/head.min.js"></script>
+		<script src="../shared/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../shared/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../shared/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../shared/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../shared/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../shared/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../shared/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: '../shared/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: '../shared/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
